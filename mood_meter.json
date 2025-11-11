@@ -1,0 +1,7 @@
+{
+    "red": ["angry", "frustrated", "annoyed", "anxious", "tense", "stressed", "irritated", "furious", "nervous", "worried"],
+    "yellow": ["happy", "excited", "energized", "motivated", "optimistic", "curious", "proud", "inspired", "joyful", "enthusiastic"],
+    "green": ["calm", "relaxed", "peaceful", "content", "grateful", "balanced", "satisfied", "chill", "secure", "hopeful"],
+    "blue": ["sad", "tired", "lonely", "disappointed", "drained", "bored", "down", "hopeless", "melancholy", "gloomy"]
+  }
+  
