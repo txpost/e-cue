@@ -1,18 +1,16 @@
 .PHONY: install chat
 
-.PHONY: install chat venv
-
 VENV_DIR := .venv
 PYTHON := $(VENV_DIR)/bin/python
 PIP := $(VENV_DIR)/bin/pip
 
-venv:
-	python3 -m venv $(VENV_DIR)
+$(PYTHON): requirements.txt
+	@python3 -m venv $(VENV_DIR)
+	@$(PYTHON) -m pip install --upgrade pip --quiet
+	@$(PIP) install -r requirements.txt --quiet --disable-pip-version-check
 
-install: venv
-	$(PYTHON) -m pip install --upgrade pip
-	$(PIP) install -r requirements.txt
+install: $(PYTHON)
 
-chat: install
-	$(PYTHON) chat.py
+chat: $(PYTHON)
+	@$(PYTHON) chat.py
 

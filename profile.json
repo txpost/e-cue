@@ -6,14 +6,18 @@
     "excitement",
     "enthusiasm",
     "motivation",
-    "accomplishment"
+    "accomplishment",
+    "uncertainty",
+    "hope",
+    "relief"
   ],
   "growth_goals": [
     "practice reflection on what sparks joy and excitement",
     "continue exploring motivation",
-    "practice self-reflection"
+    "practice self-reflection",
+    "cultivate curiosity"
   ],
-  "preferred_tone": "gentle and curious",
+  "preferred_tone": "compassionate and non-judgmental",
   "progress_notes": [
     {
       "date": "unknown",
@@ -46,6 +50,14 @@
     {
       "date": "2025-11-12",
       "note": "The user gained a deeper understanding of their own motivational drivers, and the conversation helped them tap into their sense of accomplishment."
+    },
+    {
+      "date": "2025-11-12",
+      "note": "Remember that uncertainty is a natural part of growth, and embracing it can lead to new discoveries."
+    },
+    {
+      "date": "2025-11-12",
+      "note": "We've gained a deeper understanding of our emotions and can now approach challenges with greater empathy."
     }
   ]
 }
