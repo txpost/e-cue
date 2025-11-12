@@ -1,5 +1,6 @@
 import json
 import itertools
+import re
 import sys
 import threading
 import time
@@ -85,6 +86,79 @@ def fallback_summary(messages, label="session"):
     return f"Summary of {label}: " + " | ".join(user_msgs[-3:])
 
 
+DEFAULT_SESSION_PAYLOAD = {
+    "summary_text": "",
+    "mood_meter": "",
+    "emotional_themes": [],
+    "growth_goals": [],
+    "progress_note": "",
+    "preferred_tone": "",
+}
+
+
+def strip_code_fences(text):
+    stripped = text.strip()
+    if stripped.startswith("```") and stripped.endswith("```"):
+        inner = stripped[3:-3].strip()
+        if inner.lower().startswith("json"):
+            inner = inner.split("\n", 1)[1].strip() if "\n" in inner else inner[4:].strip()
+        return inner
+    return text
+
+
+def ensure_session_payload(payload, fallback_text):
+    data = DEFAULT_SESSION_PAYLOAD.copy()
+    if isinstance(payload, dict):
+        for key in data.keys():
+            value = payload.get(key)
+            if key in ("emotional_themes", "growth_goals") and isinstance(value, list):
+                data[key] = [str(item) for item in value if isinstance(item, str)]
+            elif isinstance(value, str):
+                data[key] = value.strip()
+    if not data["summary_text"]:
+        data["summary_text"] = fallback_text
+    if not data["progress_note"]:
+        data["progress_note"] = fallback_text
+    return data
+
+
+def parse_json_with_recovery(text):
+    stripped = text.strip()
+
+    def add_candidate(container, candidate):
+        candidate = candidate.strip()
+        if candidate and candidate not in container:
+            container.append(candidate)
+
+    candidates = []
+    add_candidate(candidates, stripped)
+
+    no_trailing_commas = re.sub(r",\s*([}\]])", r"\1", stripped)
+    add_candidate(candidates, no_trailing_commas)
+
+    if stripped.startswith("{"):
+        diff = stripped.count("{") - stripped.count("}")
+        if diff > 0:
+            add_candidate(candidates, stripped + "}" * diff)
+            add_candidate(candidates, no_trailing_commas + "}" * diff)
+    if stripped.startswith("["):
+        diff = stripped.count("[") - stripped.count("]")
+        if diff > 0:
+            add_candidate(candidates, stripped + "]" * diff)
+            add_candidate(candidates, no_trailing_commas + "]" * diff)
+
+    last_exc = None
+    for candidate in candidates:
+        try:
+            return json.loads(candidate)
+        except json.JSONDecodeError as exc:
+            last_exc = exc
+            continue
+    if last_exc:
+        raise last_exc
+    raise json.JSONDecodeError("Unable to parse JSON response", stripped, 0)
+
+
 def summarize_session(model, messages, persona):
     summarize_prompt = load_summarize_prompt()
 
@@ -101,11 +175,20 @@ def summarize_session(model, messages, persona):
         )
         content = response.get("message", {}).get("content", "")
         if content and content.strip():
-            return content.strip()
+            cleaned = strip_code_fences(content)
+            try:
+                payload = parse_json_with_recovery(cleaned)
+                fallback = fallback_summary(messages, label="session")
+                return ensure_session_payload(payload, fallback)
+            except json.JSONDecodeError:
+                sample = cleaned.strip()
+                print(f"[warn] summarize_session expected JSON, received (len={len(sample)}): {sample}")
+                pass
     except Exception as exc:
         print(f"[warn] summarize_session fallback due to error: {exc}")
 
-    return fallback_summary(messages, label="session")
+    fallback = fallback_summary(messages, label="session")
+    return ensure_session_payload({}, fallback)
 
 
 # ==============================
@@ -209,29 +292,58 @@ def update_profile_with_summary(session_summary):
 
     profile["progress_notes"] = normalize_progress_notes(profile.get("progress_notes", []))
 
-    summary_payload = None
-    if isinstance(session_summary, str):
+    summary_payload = {}
+    if isinstance(session_summary, dict):
+        summary_payload = session_summary
+    elif isinstance(session_summary, str):
         try:
             summary_payload = json.loads(session_summary)
         except (json.JSONDecodeError, TypeError):
-            summary_payload = None
+            summary_payload = {}
 
     if isinstance(summary_payload, dict):
-        if "name" in summary_payload and isinstance(summary_payload["name"], str):
-            profile["name"] = summary_payload["name"]
-        if "preferred_tone" in summary_payload and isinstance(summary_payload["preferred_tone"], str):
-            profile["preferred_tone"] = summary_payload["preferred_tone"]
-        if "emotional_themes" in summary_payload and isinstance(summary_payload["emotional_themes"], list):
-            profile["emotional_themes"] = summary_payload["emotional_themes"]
-        if "growth_goals" in summary_payload and isinstance(summary_payload["growth_goals"], list):
-            profile["growth_goals"] = summary_payload["growth_goals"]
-        if "progress_notes" in summary_payload and isinstance(summary_payload["progress_notes"], list):
-            profile["progress_notes"] = normalize_progress_notes(summary_payload["progress_notes"])
+        name = summary_payload.get("name")
+        if isinstance(name, str) and name.strip():
+            profile["name"] = name.strip()
+
+        tone = summary_payload.get("preferred_tone")
+        if isinstance(tone, str) and tone.strip():
+            profile["preferred_tone"] = tone.strip()
+
+        emotional_themes = summary_payload.get("emotional_themes")
+        if isinstance(emotional_themes, list):
+            merged = profile.get("emotional_themes", [])
+            for theme in emotional_themes:
+                if isinstance(theme, str):
+                    cleaned = theme.strip()
+                    if cleaned and cleaned not in merged:
+                        merged.append(cleaned)
+            profile["emotional_themes"] = merged
+
+        growth_goals = summary_payload.get("growth_goals")
+        if isinstance(growth_goals, list):
+            merged = profile.get("growth_goals", [])
+            for goal in growth_goals:
+                if isinstance(goal, str):
+                    cleaned = goal.strip()
+                    if cleaned and cleaned not in merged:
+                        merged.append(cleaned)
+            profile["growth_goals"] = merged
+
+        progress_note = summary_payload.get("progress_note")
+        note_text = (
+            progress_note.strip()
+            if isinstance(progress_note, str) and progress_note.strip()
+            else summary_payload.get("summary_text", "")
+        )
     else:
+        note_text = session_summary if isinstance(session_summary, str) else ""
+
+    if note_text:
         profile["progress_notes"].append(
             {
                 "date": datetime.now().strftime("%Y-%m-%d"),
-                "note": session_summary,
+                "note": note_text,
             }
         )
 
@@ -257,11 +369,12 @@ def chat_loop():
         if user_input.lower() in ("exit", "quit"):
             print("e-cue 🌿: Before you go, let me summarize what we discussed...")
             session_summary = summarize_session(MODEL, messages, persona)
-            print(f"\nSession summary:\n{session_summary}\n")
+            summary_text = session_summary.get("summary_text", "")
+            print(f"\nSession summary:\n{summary_text}\n")
 
-            memory_data = update_memory_summary(memory_data, session_summary)
+            memory_data = update_memory_summary(memory_data, summary_text)
             save_json("memory.json", memory_data)
-            append_session_log(session_summary)
+            append_session_log(summary_text)
             update_profile_with_summary(session_summary)
             print("✅ Memory updated. See you next time.")
             break
