@@ -9,15 +9,18 @@
     "accomplishment",
     "uncertainty",
     "hope",
-    "relief"
+    "relief",
+    "desire for control"
   ],
   "growth_goals": [
     "practice reflection on what sparks joy and excitement",
     "continue exploring motivation",
     "practice self-reflection",
-    "cultivate curiosity"
+    "cultivate curiosity",
+    "practice self-compassion",
+    "focus on the process, not just the outcome"
   ],
-  "preferred_tone": "compassionate and non-judgmental",
+  "preferred_tone": "gentle and curious",
   "progress_notes": [
     {
       "date": "unknown",
@@ -58,6 +61,10 @@
     {
       "date": "2025-11-12",
       "note": "We've gained a deeper understanding of our emotions and can now approach challenges with greater empathy."
+    },
+    {
+      "date": "2025-11-12",
+      "note": "You've taken a significant step in recognizing your emotional state and shifting towards a more process-oriented mindset."
     }
   ]
 }
