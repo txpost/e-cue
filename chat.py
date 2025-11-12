@@ -1,87 +1,195 @@
 import json
 import ollama
 import os
-from typing import Any, Dict, List
+from datetime import datetime
 
-def load_memory():
-    default_memory = {"history": []}
+# === File Paths ===
+MEMORY_PATH = "memory.json"      # short-term conversation + summary
+SESSIONS_PATH = "sessions.json"  # session summaries
+PROFILE_PATH = "profile.json"    # long-term profile
+PERSONA_PATH = "persona.txt"
+SUMMARIZE_PROMPT_PATH = "summarize_prompt.txt"
 
-    if not os.path.exists("memory.json"):
-        return default_memory
+# === Helper Functions ===
+def load_json(path, default):
+    if os.path.exists(path):
+        try:
+            with open(path, "r") as f:
+                return json.load(f)
+        except:
+            return default
+    return default
 
-    try:
-        with open("memory.json", "r") as f:
-            data = json.load(f)
-    except (json.JSONDecodeError, OSError):
-        return default_memory
-
-    if isinstance(data, dict) and isinstance(data.get("history"), list):
-        return data
-
-    if isinstance(data, list):
-        return {"history": data}
-
-    return default_memory
-
-def save_memory(memory):
-    with open("memory.json", "w") as f:
-        json.dump(memory, f, indent=2)
+def save_json(path, data):
+    with open(path, "w") as f:
+        json.dump(data, f, indent=2)
 
 def load_persona():
-    with open("persona.txt", "r") as f:
+    with open(PERSONA_PATH, "r") as f:
         return f.read()
 
-def load_mood_meter():
-    with open("mood_meter.json", "r") as f:
-        return json.load(f)
+def load_summarize_prompt():
+    with open(SUMMARIZE_PROMPT_PATH, "r") as f:
+        return f.read()
 
-def get_model_name() -> str:
-    return os.getenv("OLLAMA_MODEL", "llama3.1")
+# === Memory Loaders ===
+def load_memory():
+    raw = load_json(MEMORY_PATH, None)
+    if raw is None:
+        return {"history": [], "summary": ""}
+    
+    history = raw.get("history", [])
+    summary = raw.get("summary", "")
 
+    # Handle old format without "summary"
+    if "summary" not in raw:
+        if len(history) > 6:
+            recent = history[-6:]
+            old_messages = history[:-6]
+            old_summary = json.dumps(old_messages, indent=2)
+            summary = f"Previous conversation:\n{old_summary}"
+            history = recent
+        else:
+            summary = ""
+    return {"history": history, "summary": summary}
+
+def save_memory(memory): save_json(MEMORY_PATH, memory)
+def load_sessions(): return load_json(SESSIONS_PATH, [])
+def save_sessions(sessions): save_json(SESSIONS_PATH, sessions)
+def load_profile(): return load_json(PROFILE_PATH, {
+    "name": "Unknown",
+    "emotional_themes": [],
+    "growth_goals": [],
+    "preferred_tone": "gentle and curious",
+    "progress_notes": []
+})
+def save_profile(profile): save_json(PROFILE_PATH, profile)
+
+# === Summarization Helpers ===
+def summarize_session(model, messages, persona):
+    summarize_prompt = load_summarize_prompt()
+    response = ollama.chat(
+        model=model,
+        messages=[{"role": "system", "content": summarize_prompt}] + messages
+    )
+    return response["message"]["content"].strip()
+
+def summarize_short_term(model, persona, memory):
+    if not memory["history"]:
+        return ""
+    summary_prompt = f"""{persona}
+
+Summarize the following conversation in 2–3 sentences, focusing on emotional tone and key reflections. 
+Avoid repeating exact user words. Keep it human and concise.
+
+Conversation:
+{json.dumps(memory['history'], indent=2)}
+"""
+    response = ollama.chat(model=model, messages=[{"role": "system", "content": summary_prompt}])
+    return response["message"]["content"].strip()
+
+def update_profile(model, persona, profile, summary):
+    profile_update_prompt = f"""{persona}
+
+Here is the user's long-term emotional profile:
+{json.dumps(profile, indent=2)}
+
+Update the profile with any new emotional themes, growth insights, or progress from this session summary:
+{summary}
+
+Return the updated profile as valid JSON. If unsure, leave the profile unchanged.
+"""
+    response = ollama.chat(
+        model=model,
+        messages=[{"role": "system", "content": profile_update_prompt}]
+    )
+    content = response["message"]["content"].strip()
+    try:
+        return json.loads(content)
+    except:
+        profile["progress_notes"].append({
+            "date": str(datetime.now().date()),
+            "note": summary
+        })
+        return profile
+
+# === Main Chat Loop ===
 def main():
-    model = get_model_name()
+    model = "llama3.1"
     persona = load_persona()
     memory = load_memory()
-    mood_meter = load_mood_meter()
+    sessions = load_sessions()
+    profile = load_profile()
 
-    # Initial greeting from the AI
-    print("🤖 Hey, how are you feeling?\n")
-
+    # System prompt with persona + profile
     system_prompt = f"""{persona}
 
-Here is the Mood Meter reference (for your internal use, do not print this unless asked):
-{json.dumps(mood_meter, indent=2)}
+Here is what you currently know about the user:
+{json.dumps(profile, indent=2)}
 """
-
-    # Initialize conversation history
     messages = [{"role": "system", "content": system_prompt}]
     messages += memory["history"]
 
-    while True:
-        user_input = input("You: ")
+    # === Initial greeting ===
+    print("🧠 e-cue Emotional Intelligence Chat\n")
+    print("🤖 Hey, how are you feeling?\n")
+    print("Type 'exit' to end the session.\n")
 
+    while True:
+        user_input = input("You: ").strip()
         if user_input.lower() in ["exit", "quit"]:
-            print("Goodbye 🌱\n")
+            print("\n🌱 Reflecting on this session...\n")
+
+            # Summarize entire session
+            summary = summarize_session(model, messages, persona)
+            print("🪞 Session summary:\n", summary, "\n")
+
+            # Save session summary
+            sessions.append({
+                "date": str(datetime.now().date()),
+                "summary": summary
+            })
+            save_sessions(sessions)
+
+            # Update long-term profile
+            profile = update_profile(model, persona, profile, summary)
+            save_profile(profile)
+
+            # Clear short-term memory
+            save_memory({"history": [], "summary": ""})
+
+            print("Session saved. Goodbye 🌿\n")
             break
 
+        # Add user message
         messages.append({"role": "user", "content": user_input})
-
-        # Ask Ollama
-        try:
-            response = ollama.chat(model=model, messages=messages)
-        except Exception as error:
-            print(f"\n⚠️  Unable to generate a response using model '{model}': {error}\n")
-            print("Tip: ensure the model is installed locally or set OLLAMA_MODEL to another available model.\n")
-            # remove the last user message so it can be retried with a different model later
-            messages.pop()
-            continue
-
-        reply = response["message"]["content"].strip()
-        print(f"\n🤖 {reply}\n")
-
-        messages.append({"role": "assistant", "content": reply})
         memory["history"].append({"role": "user", "content": user_input})
+
+        # Prepare context: system prompt + short-term summary + last few messages
+        context_messages = [{"role": "system", "content": system_prompt}]
+        if memory.get("summary"):
+            context_messages.append({"role": "system", "content": memory["summary"]})
+        context_messages += memory["history"][-6:]
+
+        # Get AI reply
+        response = ollama.chat(model=model, messages=context_messages)
+        reply = response["message"]["content"].strip()
+
+        print(f"\n🤖 {reply}\n")
+        messages.append({"role": "assistant", "content": reply})
         memory["history"].append({"role": "assistant", "content": reply})
+
+        # Summarize short-term memory every 15 messages
+        if len(memory["history"]) >= 15:
+            new_summary = summarize_short_term(model, persona, memory)
+            if memory.get("summary"):
+                memory["summary"] += "\n" + new_summary
+            else:
+                memory["summary"] = new_summary
+            # Keep only last 6 messages for natural flow
+            memory["history"] = memory["history"][-6:]
+
+        # Save short-term memory
         save_memory(memory)
 
 if __name__ == "__main__":
