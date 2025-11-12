@@ -10,7 +10,8 @@
     "uncertainty",
     "hope",
     "relief",
-    "desire for control"
+    "desire for control",
+    "guilt"
   ],
   "growth_goals": [
     "practice reflection on what sparks joy and excitement",
@@ -18,7 +19,9 @@
     "practice self-reflection",
     "cultivate curiosity",
     "practice self-compassion",
-    "focus on the process, not just the outcome"
+    "focus on the process, not just the outcome",
+    "reframe negative thoughts",
+    "cultivate confidence"
   ],
   "preferred_tone": "gentle and curious",
   "progress_notes": [
@@ -65,6 +68,10 @@
     {
       "date": "2025-11-12",
       "note": "You've taken a significant step in recognizing your emotional state and shifting towards a more process-oriented mindset."
+    },
+    {
+      "date": "2025-11-12",
+      "note": "By reframing and anchoring, we were able to shift emotions from feeling stuck to feeling more relaxed and confident."
     }
   ]
 }

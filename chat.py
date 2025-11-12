@@ -76,6 +76,21 @@ def load_summarize_prompt():
         )
 
 
+def load_mood_meter():
+    default = {"red": [], "yellow": [], "blue": [], "green": []}
+    data = load_json("mood_meter.json", default)
+    if not isinstance(data, dict):
+        return default
+    normalized = {}
+    for quadrant in ("red", "yellow", "blue", "green"):
+        words = data.get(quadrant, [])
+        if isinstance(words, list):
+            normalized[quadrant] = [w.strip() for w in words if isinstance(w, str) and w.strip()]
+        else:
+            normalized[quadrant] = []
+    return normalized
+
+
 # ==============================
 # Summarization
 # ==============================
@@ -356,8 +371,28 @@ def update_profile_with_summary(session_summary):
 def chat_loop():
     memory_data = load_json("memory.json", {"summary": "", "history": []})
     persona = load_persona()
+    mood_meter = load_mood_meter()
 
-    system_prompt = f"{persona}\n\nUser background summary:\n{memory_data.get('summary', '')}"
+    quadrant_lines = []
+    for quadrant, words in mood_meter.items():
+        if words:
+            quadrant_lines.append(f"{quadrant.upper()}: {', '.join(words)}")
+    mood_meter_guidance = "\n".join(quadrant_lines)
+
+    mood_meter_rules = (
+        "Stay on task: guide the user through Mood Meter identification, awareness, then regulation. "
+        "Do not wander into unrelated topics or extended storytelling. "
+        "When naming or suggesting feelings, use only the Mood Meter words listed below. "
+        "If the user offers a word outside the list, acknowledge it briefly, then map it to the closest Mood Meter option or request clarification. "
+        "Never invent or recommend new feeling vocabulary beyond this list."
+    )
+
+    system_prompt = (
+        f"{persona}\n\n"
+        f"{mood_meter_rules}\n"
+        f"Mood Meter vocabulary:\n{mood_meter_guidance}\n\n"
+        f"User background summary:\n{memory_data.get('summary', '')}"
+    )
     messages = [{"role": "system", "content": system_prompt}]
 
     print("e-cue 🌿: Hey, how are you feeling?")
