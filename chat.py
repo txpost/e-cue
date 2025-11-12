@@ -44,8 +44,8 @@ def main():
     memory = load_memory()
     mood_meter = load_mood_meter()
 
-    print("🧠 Emotional Intelligence Chat\n")
-    print("Type 'exit' to quit.\n")
+    # Initial greeting from the AI
+    print("🤖 Hey, how are you feeling?\n")
 
     system_prompt = f"""{persona}
 
