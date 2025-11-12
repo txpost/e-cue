@@ -2,6 +2,7 @@ import json
 import ollama
 import os
 from datetime import datetime
+from typing import Any, Dict, List
 
 # === File Paths ===
 MEMORY_PATH = "memory.json"      # short-term conversation + summary
@@ -65,6 +66,9 @@ def load_profile(): return load_json(PROFILE_PATH, {
 })
 def save_profile(profile): save_json(PROFILE_PATH, profile)
 
+def get_model_name() -> str:
+    return os.getenv("OLLAMA_MODEL", "llama3:latest")
+
 # === Summarization Helpers ===
 def summarize_session(model, messages, persona):
     summarize_prompt = load_summarize_prompt()
@@ -115,7 +119,7 @@ Return the updated profile as valid JSON. If unsure, leave the profile unchanged
 
 # === Main Chat Loop ===
 def main():
-    model = "llama3.1"
+    model = get_model_name()
     persona = load_persona()
     memory = load_memory()
     sessions = load_sessions()
