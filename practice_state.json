@@ -6,10 +6,10 @@
       "quadrant": "blue",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:16:06Z",
-      "next_due": "2025-11-13T10:16:06Z"
+      "last_reviewed": "2025-11-13T15:37:34Z",
+      "next_due": "2025-11-13T19:37:34Z"
     },
     "miserable": {
       "emotion": "miserable",
@@ -17,10 +17,10 @@
       "quadrant": "blue",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:16:28Z",
-      "next_due": "2025-11-13T10:16:28Z"
+      "last_reviewed": "2025-11-13T15:37:43Z",
+      "next_due": "2025-11-13T19:37:43Z"
     },
     "restful": {
       "emotion": "restful",
@@ -28,10 +28,10 @@
       "quadrant": "green",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:18:53Z",
-      "next_due": "2025-11-13T10:18:53Z"
+      "last_reviewed": "2025-11-13T15:37:57Z",
+      "next_due": "2025-11-13T19:37:57Z"
     },
     "tired": {
       "emotion": "tired",
@@ -70,12 +70,12 @@
       "emotion": "happy",
       "definition": "Feeling generally joyful and satisfied.",
       "quadrant": "yellow",
-      "streak": 0,
-      "interval": 0,
-      "ease": 2.2,
-      "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:23:33Z",
-      "next_due": "2025-11-13T10:23:33Z"
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.3,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T15:38:15Z",
+      "next_due": "2025-11-14T15:38:15Z"
     },
     "sleepy": {
       "emotion": "sleepy",
@@ -83,10 +83,10 @@
       "quadrant": "green",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:23:45Z",
-      "next_due": "2025-11-13T10:23:45Z"
+      "last_reviewed": "2025-11-13T15:38:24Z",
+      "next_due": "2025-11-13T19:38:24Z"
     },
     "desolate": {
       "emotion": "desolate",
@@ -94,10 +94,10 @@
       "quadrant": "blue",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:23:57Z",
-      "next_due": "2025-11-13T10:23:57Z"
+      "last_reviewed": "2025-11-13T15:38:34Z",
+      "next_due": "2025-11-13T19:38:34Z"
     },
     "satisfied": {
       "emotion": "satisfied",
@@ -105,10 +105,10 @@
       "quadrant": "green",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:24:08Z",
-      "next_due": "2025-11-13T10:24:08Z"
+      "last_reviewed": "2025-11-13T15:38:45Z",
+      "next_due": "2025-11-13T19:38:45Z"
     },
     "troubled": {
       "emotion": "troubled",
@@ -116,10 +116,10 @@
       "quadrant": "red",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:24:30Z",
-      "next_due": "2025-11-13T10:24:30Z"
+      "last_reviewed": "2025-11-13T15:38:56Z",
+      "next_due": "2025-11-13T19:38:56Z"
     },
     "at ease": {
       "emotion": "at ease",
@@ -127,10 +127,10 @@
       "quadrant": "green",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:24:53Z",
-      "next_due": "2025-11-13T10:24:53Z"
+      "last_reviewed": "2025-11-13T15:39:10Z",
+      "next_due": "2025-11-13T19:39:10Z"
     },
     "upbeat": {
       "emotion": "upbeat",
@@ -158,12 +158,12 @@
       "emotion": "blissful",
       "definition": "Experiencing serene, perfect happiness.",
       "quadrant": "yellow",
-      "streak": 0,
-      "interval": 0,
-      "ease": 2.2,
-      "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:25:28Z",
-      "next_due": "2025-11-13T10:25:28Z"
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.3,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T15:39:25Z",
+      "next_due": "2025-11-14T15:39:25Z"
     },
     "lively": {
       "emotion": "lively",
@@ -171,10 +171,10 @@
       "quadrant": "yellow",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:25:39Z",
-      "next_due": "2025-11-13T10:25:39Z"
+      "last_reviewed": "2025-11-13T15:39:43Z",
+      "next_due": "2025-11-13T19:39:43Z"
     },
     "thoughtful": {
       "emotion": "thoughtful",
@@ -182,10 +182,10 @@
       "quadrant": "green",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:25:59Z",
-      "next_due": "2025-11-13T10:25:59Z"
+      "last_reviewed": "2025-11-13T15:40:43Z",
+      "next_due": "2025-11-13T19:40:43Z"
     },
     "fulfilled": {
       "emotion": "fulfilled",
@@ -193,10 +193,10 @@
       "quadrant": "green",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:26:09Z",
-      "next_due": "2025-11-13T10:26:09Z"
+      "last_reviewed": "2025-11-13T15:40:56Z",
+      "next_due": "2025-11-13T19:40:56Z"
     },
     "surprised": {
       "emotion": "surprised",
@@ -213,34 +213,34 @@
       "emotion": "apathetic",
       "definition": "Lacking interest or emotional response.",
       "quadrant": "blue",
-      "streak": 0,
-      "interval": 0,
-      "ease": 2.2,
-      "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:26:29Z",
-      "next_due": "2025-11-13T10:26:29Z"
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.3,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T15:41:14Z",
+      "next_due": "2025-11-14T15:41:14Z"
     },
     "stunned": {
       "emotion": "stunned",
       "definition": "Temporarily unable to react because of surprise.",
       "quadrant": "red",
-      "streak": 0,
-      "interval": 0,
-      "ease": 2.2,
-      "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:26:40Z",
-      "next_due": "2025-11-13T10:26:40Z"
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.3,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T15:41:24Z",
+      "next_due": "2025-11-14T15:41:24Z"
     },
     "complacent": {
       "emotion": "complacent",
       "definition": "Easily satisfied without concern for change.",
       "quadrant": "green",
-      "streak": 0,
-      "interval": 0,
-      "ease": 2.2,
-      "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:27:01Z",
-      "next_due": "2025-11-13T10:27:01Z"
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.3,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T15:41:39Z",
+      "next_due": "2025-11-14T15:41:39Z"
     },
     "peeved": {
       "emotion": "peeved",
@@ -248,10 +248,10 @@
       "quadrant": "red",
       "streak": 0,
       "interval": 0,
-      "ease": 2.2,
+      "ease": 1.9,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:27:12Z",
-      "next_due": "2025-11-13T10:27:12Z"
+      "last_reviewed": "2025-11-13T18:04:35Z",
+      "next_due": "2025-11-13T22:04:35Z"
     },
     "carefree": {
       "emotion": "carefree",
@@ -268,12 +268,485 @@
       "emotion": "peaceful",
       "definition": "Experiencing deep tranquility.",
       "quadrant": "green",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.3,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:04:46Z",
+      "next_due": "2025-11-14T18:04:46Z"
+    },
+    "focused": {
+      "emotion": "focused",
+      "definition": "Sharply attentive to a task or goal.",
+      "quadrant": "yellow",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:04:55Z",
+      "next_due": "2025-11-14T18:04:55Z"
+    },
+    "relaxed": {
+      "emotion": "relaxed",
+      "definition": "Loosened up and free from tension.",
+      "quadrant": "green",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:05:07Z",
+      "next_due": "2025-11-14T18:05:07Z"
+    },
+    "annoyed": {
+      "emotion": "annoyed",
+      "definition": "Mildly angry about a nuisance.",
+      "quadrant": "red",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:05:18Z",
+      "next_due": "2025-11-14T18:05:18Z"
+    },
+    "stressed": {
+      "emotion": "stressed",
+      "definition": "Feeling pressured by heavy demands or expectations.",
+      "quadrant": "red",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:05:30Z",
+      "next_due": "2025-11-14T18:05:30Z"
+    },
+    "excited": {
+      "emotion": "excited",
+      "definition": "Eagerly anticipating something enjoyable.",
+      "quadrant": "yellow",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:05:41Z",
+      "next_due": "2025-11-14T18:05:41Z"
+    },
+    "tranquil": {
+      "emotion": "tranquil",
+      "definition": "Serenely calm and undisturbed.",
+      "quadrant": "green",
       "streak": 0,
       "interval": 0,
       "ease": 2.2,
       "last_result": "incorrect",
-      "last_reviewed": "2025-11-13T06:27:28Z",
-      "next_due": "2025-11-13T10:27:28Z"
+      "last_reviewed": "2025-11-13T18:05:59Z",
+      "next_due": "2025-11-13T22:05:59Z"
+    },
+    "frightened": {
+      "emotion": "frightened",
+      "definition": "Afraid for personal safety or wellbeing.",
+      "quadrant": "red",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:06:11Z",
+      "next_due": "2025-11-13T22:06:11Z"
+    },
+    "loving": {
+      "emotion": "loving",
+      "definition": "Filled with warm affection and care.",
+      "quadrant": "green",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:06:17Z",
+      "next_due": "2025-11-14T18:06:17Z"
+    },
+    "calm": {
+      "emotion": "calm",
+      "definition": "Peacefully steady without agitation.",
+      "quadrant": "green",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:06:24Z",
+      "next_due": "2025-11-14T18:06:24Z"
+    },
+    "discouraged": {
+      "emotion": "discouraged",
+      "definition": "Losing heart after setbacks.",
+      "quadrant": "blue",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:06:41Z",
+      "next_due": "2025-11-14T18:06:41Z"
+    },
+    "chill": {
+      "emotion": "chill",
+      "definition": "Casually calm and unbothered.",
+      "quadrant": "green",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:06:54Z",
+      "next_due": "2025-11-13T22:06:54Z"
+    },
+    "lonely": {
+      "emotion": "lonely",
+      "definition": "Longing for companionship or connection.",
+      "quadrant": "blue",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:07:07Z",
+      "next_due": "2025-11-14T18:07:07Z"
+    },
+    "pleased": {
+      "emotion": "pleased",
+      "definition": "Contentedly satisfied with something.",
+      "quadrant": "yellow",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:07:19Z",
+      "next_due": "2025-11-14T18:07:19Z"
+    },
+    "morose": {
+      "emotion": "morose",
+      "definition": "Sullenly gloomy and withdrawn.",
+      "quadrant": "blue",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:07:34Z",
+      "next_due": "2025-11-13T22:07:34Z"
+    },
+    "disappointed": {
+      "emotion": "disappointed",
+      "definition": "Let down by unmet expectations.",
+      "quadrant": "blue",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:07:48Z",
+      "next_due": "2025-11-14T18:07:48Z"
+    },
+    "hyper": {
+      "emotion": "hyper",
+      "definition": "Bursting with excess energy and excitement.",
+      "quadrant": "yellow",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:07:59Z",
+      "next_due": "2025-11-13T22:07:59Z"
+    },
+    "jittery": {
+      "emotion": "jittery",
+      "definition": "Unable to stay still due to nervous energy.",
+      "quadrant": "red",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:08:08Z",
+      "next_due": "2025-11-13T22:08:08Z"
+    },
+    "balanced": {
+      "emotion": "balanced",
+      "definition": "Steady and even in emotions or actions.",
+      "quadrant": "green",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:08:23Z",
+      "next_due": "2025-11-13T22:08:23Z"
+    },
+    "comfortable": {
+      "emotion": "comfortable",
+      "definition": "Physically and emotionally at ease.",
+      "quadrant": "green",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:08:45Z",
+      "next_due": "2025-11-13T22:08:45Z"
+    },
+    "irritated": {
+      "emotion": "irritated",
+      "definition": "Annoyed by something bothersome.",
+      "quadrant": "red",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:08:56Z",
+      "next_due": "2025-11-14T18:08:56Z"
+    },
+    "tense": {
+      "emotion": "tense",
+      "definition": "Tight with worry or strain.",
+      "quadrant": "red",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:09:05Z",
+      "next_due": "2025-11-14T18:09:05Z"
+    },
+    "touched": {
+      "emotion": "touched",
+      "definition": "Gently moved by emotion or kindness.",
+      "quadrant": "green",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:09:19Z",
+      "next_due": "2025-11-13T22:09:19Z"
+    },
+    "disgusted": {
+      "emotion": "disgusted",
+      "definition": "Revolted by something offensive or wrong.",
+      "quadrant": "blue",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:09:31Z",
+      "next_due": "2025-11-13T22:09:31Z"
+    },
+    "serene": {
+      "emotion": "serene",
+      "definition": "Calm, untroubled, and composed.",
+      "quadrant": "green",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:09:42Z",
+      "next_due": "2025-11-13T22:09:42Z"
+    },
+    "anxious": {
+      "emotion": "anxious",
+      "definition": "Uneasy about potential threats or problems.",
+      "quadrant": "red",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:09:56Z",
+      "next_due": "2025-11-14T18:09:56Z"
+    },
+    "nervous": {
+      "emotion": "nervous",
+      "definition": "On edge about what might happen.",
+      "quadrant": "red",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:10:02Z",
+      "next_due": "2025-11-13T22:10:02Z"
+    },
+    "shocked": {
+      "emotion": "shocked",
+      "definition": "Stunned by an unexpected or upsetting event.",
+      "quadrant": "red",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:10:17Z",
+      "next_due": "2025-11-14T18:10:17Z"
+    },
+    "easygoing": {
+      "emotion": "easygoing",
+      "definition": "Taking things calmly without stress.",
+      "quadrant": "green",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:10:23Z",
+      "next_due": "2025-11-13T22:10:23Z"
+    },
+    "thrilled": {
+      "emotion": "thrilled",
+      "definition": "Experiencing intense delight.",
+      "quadrant": "yellow",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:10:36Z",
+      "next_due": "2025-11-13T22:10:36Z"
+    },
+    "worried": {
+      "emotion": "worried",
+      "definition": "Preoccupied with troubling thoughts.",
+      "quadrant": "red",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:10:43Z",
+      "next_due": "2025-11-13T22:10:43Z"
+    },
+    "restless": {
+      "emotion": "restless",
+      "definition": "Unable to relax or stay still.",
+      "quadrant": "red",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:10:52Z",
+      "next_due": "2025-11-13T22:10:52Z"
+    },
+    "drained": {
+      "emotion": "drained",
+      "definition": "Emptied of emotional or physical energy.",
+      "quadrant": "blue",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:10:59Z",
+      "next_due": "2025-11-14T18:10:59Z"
+    },
+    "grateful": {
+      "emotion": "grateful",
+      "definition": "Appreciative of kindness or benefits.",
+      "quadrant": "green",
+      "streak": 1,
+      "interval": 1,
+      "ease": 2.6,
+      "last_result": "correct",
+      "last_reviewed": "2025-11-13T18:11:08Z",
+      "next_due": "2025-11-14T18:11:08Z"
+    },
+    "panicked": {
+      "emotion": "panicked",
+      "definition": "Overwhelmed by sudden terror and confusion.",
+      "quadrant": "red",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:11:17Z",
+      "next_due": "2025-11-13T22:11:17Z"
+    },
+    "energized": {
+      "emotion": "energized",
+      "definition": "Filled with lively enthusiasm.",
+      "quadrant": "yellow",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:11:36Z",
+      "next_due": "2025-11-13T22:11:36Z"
+    },
+    "alienated": {
+      "emotion": "alienated",
+      "definition": "Feeling isolated and disconnected from others.",
+      "quadrant": "blue",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:11:47Z",
+      "next_due": "2025-11-13T22:11:47Z"
+    },
+    "livid": {
+      "emotion": "livid",
+      "definition": "Seething with furious anger.",
+      "quadrant": "red",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:12:01Z",
+      "next_due": "2025-11-13T22:12:01Z"
+    },
+    "playful": {
+      "emotion": "playful",
+      "definition": "Lighthearted and ready for fun.",
+      "quadrant": "yellow",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:12:07Z",
+      "next_due": "2025-11-13T22:12:07Z"
+    },
+    "enthusiastic": {
+      "emotion": "enthusiastic",
+      "definition": "Eagerly supportive and passionate.",
+      "quadrant": "yellow",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:12:17Z",
+      "next_due": "2025-11-13T22:12:17Z"
+    },
+    "spent": {
+      "emotion": "spent",
+      "definition": "Used up and unable to continue.",
+      "quadrant": "blue",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:12:25Z",
+      "next_due": "2025-11-13T22:12:25Z"
+    },
+    "cheerful": {
+      "emotion": "cheerful",
+      "definition": "Radiating bright, friendly happiness.",
+      "quadrant": "yellow",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:12:34Z",
+      "next_due": "2025-11-13T22:12:34Z"
+    },
+    "joyful": {
+      "emotion": "joyful",
+      "definition": "Overflowing with happiness.",
+      "quadrant": "yellow",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:12:43Z",
+      "next_due": "2025-11-13T22:12:43Z"
+    },
+    "pleasant": {
+      "emotion": "pleasant",
+      "definition": "Enjoying a state of easy comfort and satisfaction.",
+      "quadrant": "yellow",
+      "streak": 0,
+      "interval": 0,
+      "ease": 2.2,
+      "last_result": "incorrect",
+      "last_reviewed": "2025-11-13T18:12:52Z",
+      "next_due": "2025-11-13T22:12:52Z"
     }
   }
 }
