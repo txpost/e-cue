@@ -1,0 +1,1897 @@
+[
+    {
+        "emotion": "bored",
+        "definition": "Uninterested or unstimulated",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "disengaged",
+        "definition": "Emotionally detached or unmotivated",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "listless",
+        "definition": "Lacking energy or enthusiasm",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "weary",
+        "definition": "Physically or mentally tired",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "apathetic",
+        "definition": "Lacking interest or concern",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "dull",
+        "definition": "Feeling flat or uninspired",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "drained",
+        "definition": "Emotionally or physically depleted",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "tired",
+        "definition": "In need of rest or recovery",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "fatigued",
+        "definition": "Deeply worn out or overworked",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "exhausted",
+        "definition": "Completely out of energy",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "sleepy",
+        "definition": "Struggling to stay awake",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "burned out",
+        "definition": "Mentally and emotionally spent",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "stuck",
+        "definition": "Unable to move forward or make progress",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "deflated",
+        "definition": "Losing motivation or confidence",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "hopeless",
+        "definition": "Feeling there\u2019s no way forward",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "helpless",
+        "definition": "Unable to change your situation",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "powerless",
+        "definition": "Feeling without control or influence",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "worthless",
+        "definition": "Feeling you lack value or purpose",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "defeated",
+        "definition": "Emotionally beaten or resigned",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "downcast",
+        "definition": "Low in spirit or discouraged",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "sad",
+        "definition": "Feeling sorrow or unhappiness",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "blue",
+        "definition": "Mildly sad or melancholic",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "gloomy",
+        "definition": "Surrounded by a sense of darkness or despair",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "miserable",
+        "definition": "Deeply unhappy or uncomfortable",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "depressed",
+        "definition": "Persistently sad or low",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "grieving",
+        "definition": "Mourning a loss",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "heartbroken",
+        "definition": "Deep emotional pain from loss or rejection",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "lonely",
+        "definition": "Feeling isolated or disconnected",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "isolated",
+        "definition": "Cut off from others emotionally or physically",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "homesick",
+        "definition": "Missing a familiar place or people",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "nostalgic",
+        "definition": "Longing for the past",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "disappointed",
+        "definition": "Let down by unmet expectations",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "discouraged",
+        "definition": "Losing hope or motivation",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "disheartened",
+        "definition": "Spirit weakened by setbacks",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "pessimistic",
+        "definition": "Expecting negative outcomes",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "resigned",
+        "definition": "Accepting something unpleasant",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "sorrowful",
+        "definition": "Deep sadness or grief",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "mournful",
+        "definition": "Expressing loss or grief",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "forlorn",
+        "definition": "Abandoned or without hope",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "melancholic",
+        "definition": "Gentle",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "heavy-hearted",
+        "definition": "Emotionally burdened or down",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "regretful",
+        "definition": "Wishing you had done something differently",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "ashamed",
+        "definition": "Painfully aware of having done wrong",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "guilty",
+        "definition": "Feeling responsible for wrongdoing",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "inadequate",
+        "definition": "Feeling not good enough",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "inferior",
+        "definition": "Comparing yourself unfavorably to others",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "self-conscious",
+        "definition": "Overly aware of how you\u2019re seen",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "embarrassed",
+        "definition": "Uncomfortable or awkward about something",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "awkward",
+        "definition": "Ill at ease or unsure in social settings",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "vulnerable",
+        "definition": "Emotionally exposed or at risk",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "fragile",
+        "definition": "Emotionally delicate or easily hurt",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "uncertain",
+        "definition": "Lacking clarity or direction",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "confused",
+        "definition": "Unsure or unable to understand",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "lost",
+        "definition": "Without a sense of purpose or place",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "aimless",
+        "definition": "Drifting without goals",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "disoriented",
+        "definition": "Emotionally or mentally unsettled",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "numb",
+        "definition": "Emotionally shut down or unfeeling",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "empty",
+        "definition": "Lacking emotional fulfillment",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "hollow",
+        "definition": "Feeling void or meaningless",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "pained",
+        "definition": "Emotionally hurt or wounded",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "grieved",
+        "definition": "Deeply affected by loss",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "crushed",
+        "definition": "Overwhelmed by emotional pain",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "dejected",
+        "definition": "Downhearted after disappointment",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "down",
+        "definition": "Low in mood or spirit",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "withdrawn",
+        "definition": "Pulling away from others",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "alienated",
+        "definition": "Feeling like an outsider",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "disconnected",
+        "definition": "Emotionally or socially detached",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "neglected",
+        "definition": "Uncared for or overlooked",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "unseen",
+        "definition": "Feeling invisible or unnoticed",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "ignored",
+        "definition": "Overlooked or dismissed by others",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "rejected",
+        "definition": "Excluded or unwanted",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "abandoned",
+        "definition": "Left alone emotionally or physically",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "despairing",
+        "definition": "Losing all sense of hope",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "wretched",
+        "definition": "Miserable to the point of suffering",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "distraught",
+        "definition": "Extremely upset or agitated",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "apprehensive",
+        "definition": "Nervous about what\u2019s to come",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "uneasy",
+        "definition": "Feeling unsettled or worried",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "restless",
+        "definition": "Unable to relax or find peace",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "nervous",
+        "definition": "On edge or fidgety",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "anxious",
+        "definition": "Uneasy and preoccupied with worry",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "worried",
+        "definition": "Concerned something will go wrong",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "doubtful",
+        "definition": "Unsure or hesitant",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "insecure",
+        "definition": "Lacking confidence or stability",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "self-doubting",
+        "definition": "Questioning your abilities",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "fearful",
+        "definition": "Afraid of harm or failure",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "terrified",
+        "definition": "Overwhelmed with fear",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "panicked",
+        "definition": "Gripped by sudden terror",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "overwhelmed",
+        "definition": "Unable to cope with emotions or demands",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "distracted",
+        "definition": "Unable to focus",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "overloaded",
+        "definition": "Emotionally or mentally maxed out",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "disorganized",
+        "definition": "Scattered and unsteady inside",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "fatalistic",
+        "definition": "Believing nothing can be changed",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "lifeless",
+        "definition": "Lacking vitality or motivation",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "broken",
+        "definition": "Emotionally shattered beyond words",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "despondent",
+        "definition": "Deep despair and loss of spirit",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "remorseful",
+        "definition": "Deep regret for past actions",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "hurt",
+        "definition": "Emotionally wounded",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "low",
+        "definition": "Generally down or sad",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "dispirited",
+        "definition": "Lacking enthusiasm or hope",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "listless",
+        "definition": "Without interest or energy",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "down",
+        "definition": "Not in good spirits",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "tearful",
+        "definition": "Ready to cry",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "devastated",
+        "definition": "Emotionally shattered",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "defeated",
+        "definition": "Broken in spirit",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "miserable",
+        "definition": "Deeply unhappy",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "hopeless",
+        "definition": "Without any optimism",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "despairing",
+        "definition": "Seeing no way out",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "numb",
+        "definition": "Emotionally frozen",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "exhausted",
+        "definition": "Worn out",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "lifeless",
+        "definition": "Lacking vitality or motivation",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "broken",
+        "definition": "Emotionally shattered beyond words",
+        "quadrant": "blue"
+    },
+    {
+        "emotion": "irritated",
+        "definition": "Slightly angry or bothered",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "annoyed",
+        "definition": "Mildly upset by something unpleasant",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "frustrated",
+        "definition": "Blocked from reaching a goal or desire",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "agitated",
+        "definition": "Restless or emotionally stirred up",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "angry",
+        "definition": "Strong displeasure or hostility",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "furious",
+        "definition": "Intensely angry or enraged",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "enraged",
+        "definition": "Explosively angry",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "resentful",
+        "definition": "Holding bitterness over unfair treatment",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "bitter",
+        "definition": "Angry about something that feels unjust",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "hostile",
+        "definition": "Aggressive or unfriendly",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "combative",
+        "definition": "Ready to fight or argue",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "confrontational",
+        "definition": "Eager to challenge others",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "defensive",
+        "definition": "Guarded or protective when criticized",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "irritable",
+        "definition": "Easily bothered or triggered",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "testy",
+        "definition": "Short-tempered or impatient",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "snappy",
+        "definition": "Speaking sharply or impatiently",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "grumpy",
+        "definition": "Easily annoyed or moody",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "cross",
+        "definition": "Mildly angry or short-fused",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "upset",
+        "definition": "Emotionally unsettled or bothered",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "disturbed",
+        "definition": "Emotionally shaken or unsettled",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "alarmed",
+        "definition": "Suddenly afraid or anxious",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "panicked",
+        "definition": "Overcome with sudden fear",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "frightened",
+        "definition": "Experiencing fear or anxiety",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "scared",
+        "definition": "Feeling fear or alarm",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "terrified",
+        "definition": "Extremely scared or panicked",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "shocked",
+        "definition": "Stunned by something unexpected",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "startled",
+        "definition": "Surprised or momentarily frightened",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "apprehensive",
+        "definition": "Nervous about what\u2019s coming",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "uneasy",
+        "definition": "Feeling unsettled or uncertain",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "restless",
+        "definition": "Unable to relax or stay still",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "distracted",
+        "definition": "Pulled away by tension or worry",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "nervous",
+        "definition": "On edge or fidgety",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "tense",
+        "definition": "Physically or emotionally tight",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "stressed",
+        "definition": "Under heavy pressure or strain",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "overwhelmed",
+        "definition": "Overpowered by emotion or workload",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "burned out",
+        "definition": "Emotionally exhausted from effort",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "exasperated",
+        "definition": "Deeply irritated or worn down",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "impatient",
+        "definition": "Struggling to wait calmly",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "aggravated",
+        "definition": "Intensely annoyed",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "offended",
+        "definition": "Hurt or insulted by someone\u2019s words or actions",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "indignant",
+        "definition": "Angry about unfairness or disrespect",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "outraged",
+        "definition": "Furious about injustice",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "vengeful",
+        "definition": "Wanting payback or revenge",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "spiteful",
+        "definition": "Intentionally mean or hurtful",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "contemptuous",
+        "definition": "Feeling superior or scornful",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "judgmental",
+        "definition": "Critical or disapproving",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "jealous",
+        "definition": "Resentful of someone\u2019s success or possessions",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "envious",
+        "definition": "Wishing for what someone else has",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "insecure",
+        "definition": "Lacking confidence or stability",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "overloaded",
+        "definition": "Emotionally or mentally overwhelmed",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "furious",
+        "definition": "Extremely angry",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "hostile",
+        "definition": "Aggressive or unfriendly",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "exasperated",
+        "definition": "Frustrated and irritated",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "tense",
+        "definition": "Physically or emotionally strained",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "stressed",
+        "definition": "Under pressure",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "irritable",
+        "definition": "Easily annoyed",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "agitated",
+        "definition": "Restless or disturbed",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "defensive",
+        "definition": "Guarded or protective",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "panicked",
+        "definition": "Overcome with sudden fear",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "frustrated",
+        "definition": "Unable to achieve goals",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "annoyed",
+        "definition": "Mildly upset",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "angry",
+        "definition": "Strong displeasure",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "outraged",
+        "definition": "Furious at unfairness",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "jealous",
+        "definition": "Envious of someone else",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "envious",
+        "definition": "Wishing for what others have",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "indignant",
+        "definition": "Upset about injustice",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "hostile",
+        "definition": "Aggressive or unfriendly",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "combative",
+        "definition": "Ready to fight",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "confrontational",
+        "definition": "Eager to challenge others",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "bitter",
+        "definition": "Holding resentment",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "resentful",
+        "definition": "Bitter over unfair treatment",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "grumpy",
+        "definition": "Easily annoyed",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "cross",
+        "definition": "Mildly angry",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "upset",
+        "definition": "Emotionally unsettled",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "disturbed",
+        "definition": "Emotionally shaken",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "alarmed",
+        "definition": "Nervous or fearful",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "shocked",
+        "definition": "Stunned",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "startled",
+        "definition": "Surprised",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "frightened",
+        "definition": "Afraid",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "scared",
+        "definition": "Feeling fear",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "terrified",
+        "definition": "Extremely scared",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "apprehensive",
+        "definition": "Nervous about what\u2019s coming",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "uneasy",
+        "definition": "Feeling unsettled",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "restless",
+        "definition": "Unable to relax",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "distracted",
+        "definition": "Unable to focus",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "nervous",
+        "definition": "On edge",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "tense",
+        "definition": "Physically or emotionally tight",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "stressed",
+        "definition": "Under pressure",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "overwhelmed",
+        "definition": "Emotionally overloaded",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "burned out",
+        "definition": "Exhausted from effort",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "exasperated",
+        "definition": "Irritated",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "impatient",
+        "definition": "Unable to wait calmly",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "aggravated",
+        "definition": "Annoyed",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "offended",
+        "definition": "Hurt by words or actions",
+        "quadrant": "red"
+    },
+    {
+        "emotion": "joyful",
+        "definition": "Feeling happiness or delight",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "excited",
+        "definition": "High energy positive emotion",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "thrilled",
+        "definition": "Extremely excited or pleased",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "elated",
+        "definition": "Very happy or overjoyed",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "cheerful",
+        "definition": "Noticeably happy and optimistic",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "content",
+        "definition": "Satisfied and peaceful",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Confident about future outcomes",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "eager",
+        "definition": "Looking forward with enthusiasm",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "enthusiastic",
+        "definition": "Excited and eager to participate",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "playful",
+        "definition": "Lighthearted and fun",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "amused",
+        "definition": "Entertained or finding humor",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "delighted",
+        "definition": "Great pleasure or happiness",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "pleased",
+        "definition": "Feeling satisfied or happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "hilarious",
+        "definition": "Extremely funny",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "exhilarated",
+        "definition": "Thrilled and energetic",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "overjoyed",
+        "definition": "Extremely happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "grateful",
+        "definition": "Feeling thankful or appreciative",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "cheery",
+        "definition": "Bright and happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "sunny",
+        "definition": "Optimistic and bright",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Hopeful and positive",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "inspired",
+        "definition": "Motivated or uplifted",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "excited",
+        "definition": "Very enthusiastic",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "joyful",
+        "definition": "Feeling great pleasure",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "thrilled",
+        "definition": "Emotionally high energy happiness",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "eager",
+        "definition": "Looking forward to something",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "exuberant",
+        "definition": "Full of energy and joy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "ecstatic",
+        "definition": "Extremely happy or joyful",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "jubilant",
+        "definition": "Expressing great happiness",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "overjoyed",
+        "definition": "Excessively happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "contented",
+        "definition": "Satisfied and calm",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "happiness",
+        "definition": "Feeling pleased or satisfied",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "cheerful",
+        "definition": "Noticeably happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "blissful",
+        "definition": "Perfectly happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "grateful",
+        "definition": "Feeling appreciation",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "hopeful",
+        "definition": "Expecting good things",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Positive about future",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "excited",
+        "definition": "High-energy joy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "enthusiastic",
+        "definition": "Strongly interested",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "eager",
+        "definition": "Looking forward",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "elated",
+        "definition": "Very happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "exhilarated",
+        "definition": "Thrilled",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "jubilant",
+        "definition": "Very joyful",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "playful",
+        "definition": "Lighthearted",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "amused",
+        "definition": "Entertained",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "delighted",
+        "definition": "Pleased",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "pleased",
+        "definition": "Feeling happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "hilarious",
+        "definition": "Very funny",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "cheery",
+        "definition": "Optimistic",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "sunny",
+        "definition": "Bright and positive",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Hoping for the best",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "inspired",
+        "definition": "Motivated",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "excited",
+        "definition": "Eager and happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "joyful",
+        "definition": "Pleasure and delight",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "thrilled",
+        "definition": "Very excited",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "eager",
+        "definition": "Looking forward",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "exuberant",
+        "definition": "Full of life",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "ecstatic",
+        "definition": "Overjoyed",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "jubilant",
+        "definition": "Very happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "overjoyed",
+        "definition": "Extremely pleased",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "contented",
+        "definition": "At peace",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "happiness",
+        "definition": "Pleasant feeling",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "cheerful",
+        "definition": "Joyful",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "blissful",
+        "definition": "Perfectly happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "grateful",
+        "definition": "Thankful",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "hopeful",
+        "definition": "Expecting good",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Positive",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "excited",
+        "definition": "High energy joy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "enthusiastic",
+        "definition": "Passionate",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "eager",
+        "definition": "Looking forward",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "elated",
+        "definition": "Extremely happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "exhilarated",
+        "definition": "Thrilled",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "jubilant",
+        "definition": "Very joyful",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "playful",
+        "definition": "Fun loving",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "amused",
+        "definition": "Entertained",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "delighted",
+        "definition": "Pleased",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "pleased",
+        "definition": "Happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "hilarious",
+        "definition": "Very funny",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "cheery",
+        "definition": "Optimistic",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "sunny",
+        "definition": "Bright",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Hoping for the best",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "inspired",
+        "definition": "Motivated",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "excited",
+        "definition": "Eager",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "joyful",
+        "definition": "Happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "thrilled",
+        "definition": "Excited",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "eager",
+        "definition": "Looking forward",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "exuberant",
+        "definition": "Full of energy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "ecstatic",
+        "definition": "Overjoyed",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "jubilant",
+        "definition": "Very happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "overjoyed",
+        "definition": "Extremely pleased",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "contented",
+        "definition": "Calm and happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "happiness",
+        "definition": "Feeling pleasure",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "cheerful",
+        "definition": "Joyful",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "blissful",
+        "definition": "Perfectly happy",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "grateful",
+        "definition": "Thankful",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "hopeful",
+        "definition": "Looking forward",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Positive",
+        "quadrant": "yellow"
+    },
+    {
+        "emotion": "calm",
+        "definition": "Peaceful and relaxed",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "content",
+        "definition": "Satisfied and comfortable",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "peaceful",
+        "definition": "Free from stress or disturbance",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "relaxed",
+        "definition": "At ease",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "serene",
+        "definition": "Quiet and untroubled",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "tranquil",
+        "definition": "Calm and still",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "comfortable",
+        "definition": "Feeling safe and at ease",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "safe",
+        "definition": "Feeling protected or secure",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "stable",
+        "definition": "Emotionally balanced",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "confident",
+        "definition": "Sure of oneself",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "secure",
+        "definition": "Feeling protected",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "grounded",
+        "definition": "Emotionally centered",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "centered",
+        "definition": "Balanced and calm",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "balanced",
+        "definition": "Even-tempered",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "at ease",
+        "definition": "Relaxed and comfortable",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "harmonious",
+        "definition": "Peaceful and coordinated",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "reassured",
+        "definition": "Feeling supported",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "relaxed",
+        "definition": "Calm and loose",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "peaceful",
+        "definition": "Tranquil and still",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "contented",
+        "definition": "Happy and calm",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "grateful",
+        "definition": "Appreciative",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Hoping for good outcomes",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "satisfied",
+        "definition": "Fulfilled",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "comforted",
+        "definition": "Feeling supported",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "confident",
+        "definition": "Sure of oneself",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "stable",
+        "definition": "Emotionally steady",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "grounded",
+        "definition": "Emotionally centered",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "calm",
+        "definition": "At peace",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "serene",
+        "definition": "Untroubled",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "tranquil",
+        "definition": "Quiet and calm",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "harmonious",
+        "definition": "In balance",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "at ease",
+        "definition": "Relaxed",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "secure",
+        "definition": "Protected",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "reassured",
+        "definition": "Confident",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "centered",
+        "definition": "Emotionally balanced",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "balanced",
+        "definition": "Even-tempered",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "relaxed",
+        "definition": "Free from stress",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "contented",
+        "definition": "Satisfied",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "peaceful",
+        "definition": "Tranquil",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "comfortable",
+        "definition": "At ease",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "safe",
+        "definition": "Protected",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "stable",
+        "definition": "Emotionally steady",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "calm",
+        "definition": "Relaxed",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "serene",
+        "definition": "Quiet and undisturbed",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "tranquil",
+        "definition": "Peaceful",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "confident",
+        "definition": "Sure of self",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "secure",
+        "definition": "Protected",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "grounded",
+        "definition": "Emotionally centered",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "centered",
+        "definition": "Balanced",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "balanced",
+        "definition": "Stable",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "at ease",
+        "definition": "Relaxed",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "harmonious",
+        "definition": "Peaceful",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "reassured",
+        "definition": "Supported",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "relaxed",
+        "definition": "At ease",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "peaceful",
+        "definition": "Calm",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "contented",
+        "definition": "Happy",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "grateful",
+        "definition": "Thankful",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "optimistic",
+        "definition": "Hoping for good",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "satisfied",
+        "definition": "Fulfilled",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "comforted",
+        "definition": "Supported",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "confident",
+        "definition": "Sure",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "stable",
+        "definition": "Even-tempered",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "grounded",
+        "definition": "Centered",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "calm",
+        "definition": "Peaceful",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "serene",
+        "definition": "Tranquil",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "tranquil",
+        "definition": "Relaxed",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "harmonious",
+        "definition": "In balance",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "at ease",
+        "definition": "Comfortable",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "secure",
+        "definition": "Safe",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "reassured",
+        "definition": "Supported",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "centered",
+        "definition": "Balanced",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "balanced",
+        "definition": "Even-tempered",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "relaxed",
+        "definition": "Calm",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "contented",
+        "definition": "Peaceful",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "peaceful",
+        "definition": "Serene",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "comfortable",
+        "definition": "At ease",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "safe",
+        "definition": "Secure",
+        "quadrant": "green"
+    },
+    {
+        "emotion": "stable",
+        "definition": "Grounded",
+        "quadrant": "green"
+    }
+]
