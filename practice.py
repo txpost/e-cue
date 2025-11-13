@@ -253,10 +253,10 @@ def main() -> int:
             print("No cards available for review. Exiting.")
             break
 
-        print("=" * 60)
-        print(f"Definition: {card.definition}")
+        print(" " * 60)
+        print(f"{card.definition}")
         try:
-            user_answer = input("Emotion (or 'quit'): ").strip()
+            user_answer = input("").strip()
         except EOFError:
             print("\nNo input detected. Exiting practice.")
             break
@@ -290,13 +290,13 @@ def main() -> int:
         if updated_meta and isinstance(updated_meta.get("next_due"), str):
             next_due = from_iso(updated_meta["next_due"])
             wait = next_due - utc_now()
-            if wait.total_seconds() > 0:
-                print(f"Next review for this card in ~{format_timedelta(wait)}.")
+            # if wait.total_seconds() > 0:
+            #     print(f"Next review for this card in ~{format_timedelta(wait)}.")
 
-        print(
-            f"Progress: {stats['correct']}/{stats['total']} correct | "
-            f"{session.due_count()} due | {session.remaining_new()} new remaining"
-        )
+        # print(
+        #     f"Progress: {stats['correct']}/{stats['total']} correct | "
+        #     f"{session.due_count()} due | {session.remaining_new()} new remaining"
+        # )
 
     save_state(state)
     print("Practice session complete.")
