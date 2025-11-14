@@ -391,6 +391,13 @@ class FeelingsLayerVariant:
         option_lookup = {option.lower(): option for option in options}
         alias_lookup = {"p": "Primary", "s": "Secondary", "t": "Tertiary"}
 
+        if layer == "primary":
+            chain = path[0]
+        elif layer == "secondary":
+            chain = f"{path[0]} → {path[1]}"
+        else:
+            chain = f"{path[0]} → {path[1]} → {path[2]}"
+
         def evaluate(response: str) -> PracticeResult:
             cleaned = response.strip().lower()
             selection: Optional[str] = None
@@ -414,14 +421,14 @@ class FeelingsLayerVariant:
                 )
 
             if selection.lower() == layer:
-                return PracticeResult(correct=True, feedback=["✅ Correct!"])
+                return PracticeResult(
+                    correct=True,
+                    feedback=[
+                        "✅ Correct!",
+                        f"'{emotion}' is a {layer.title()} emotion ({chain}).",
+                    ],
+                )
 
-            if layer == "primary":
-                chain = path[0]
-            elif layer == "secondary":
-                chain = f"{path[0]} → {path[1]}"
-            else:
-                chain = f"{path[0]} → {path[1]} → {path[2]}"
             return PracticeResult(
                 correct=False,
                 feedback=[f"❌ Incorrect. '{emotion}' is a {layer.title()} emotion ({chain})."],
