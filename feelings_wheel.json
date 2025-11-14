@@ -1,84 +1,342 @@
 [
-  {"primary": "Angry", "secondary": "Hurt", "tertiary": "Embarrassed"},
-  {"primary": "Angry", "secondary": "Hurt", "tertiary": "Devastated"},
-  {"primary": "Angry", "secondary": "Hurt", "tertiary": "Terrified"},
-  {"primary": "Angry", "secondary": "Threatened", "tertiary": "Exposed"},
-  {"primary": "Angry", "secondary": "Threatened", "tertiary": "Jealous"},
-  {"primary": "Angry", "secondary": "Threatened", "tertiary": "Insecure"},
-  {"primary": "Angry", "secondary": "Hateful", "tertiary": "Violated"},
-  {"primary": "Angry", "secondary": "Hateful", "tertiary": "Ridiculed"},
-  {"primary": "Angry", "secondary": "Hateful", "tertiary": "Indignant"},
-  {"primary": "Angry", "secondary": "Mad", "tertiary": "Furious"},
-  {"primary": "Angry", "secondary": "Mad", "tertiary": "Enraged"},
-  {"primary": "Angry", "secondary": "Mad", "tertiary": "Annoyed"},
-  {"primary": "Angry", "secondary": "Self-Hostile", "tertiary": "Repugnant"},
-  {"primary": "Angry", "secondary": "Self-Hostile", "tertiary": "Disgusted"},
-  {"primary": "Angry", "secondary": "Self-Hostile", "tertiary": "Loathing"},
-  {"primary": "Disgusted", "secondary": "Disappointed", "tertiary": "Appalled"},
-  {"primary": "Disgusted", "secondary": "Disappointed", "tertiary": "Revolted"},
-  {"primary": "Disgusted", "secondary": "Disappointed", "tertiary": "Disillusioned"},
-  {"primary": "Disgusted", "secondary": "Awful", "tertiary": "Nauseated"},
-  {"primary": "Disgusted", "secondary": "Awful", "tertiary": "Distasteful"},
-  {"primary": "Disgusted", "secondary": "Awful", "tertiary": "Sickened"},
-  {"primary": "Disgusted", "secondary": "Repelled", "tertiary": "Horrified"},
-  {"primary": "Disgusted", "secondary": "Repelled", "tertiary": "Offended"},
-  {"primary": "Disgusted", "secondary": "Repelled", "tertiary": "Detestable"},
-  {"primary": "Sad", "secondary": "Abandoned", "tertiary": "Ignored"},
-  {"primary": "Sad", "secondary": "Abandoned", "tertiary": "Victimized"},
-  {"primary": "Sad", "secondary": "Abandoned", "tertiary": "Alienated"},
-  {"primary": "Sad", "secondary": "Vulnerable", "tertiary": "Inferior"},
-  {"primary": "Sad", "secondary": "Vulnerable", "tertiary": "Empty"},
-  {"primary": "Sad", "secondary": "Vulnerable", "tertiary": "Weak"},
-  {"primary": "Sad", "secondary": "Despair", "tertiary": "Grief"},
-  {"primary": "Sad", "secondary": "Despair", "tertiary": "Powerless"},
-  {"primary": "Sad", "secondary": "Despair", "tertiary": "Vulnerable"},
-  {"primary": "Sad", "secondary": "Guilty", "tertiary": "Remorseful"},
-  {"primary": "Sad", "secondary": "Guilty", "tertiary": "Bad"},
-  {"primary": "Sad", "secondary": "Guilty", "tertiary": "Ashamed"},
-  {"primary": "Sad", "secondary": "Depressed", "tertiary": "Inferior"},
-  {"primary": "Sad", "secondary": "Depressed", "tertiary": "Empty"},
-  {"primary": "Sad", "secondary": "Depressed", "tertiary": "Withdrawn"},
-  {"primary": "Happy", "secondary": "Optimistic", "tertiary": "Eager"},
-  {"primary": "Happy", "secondary": "Optimistic", "tertiary": "Hopeful"},
-  {"primary": "Happy", "secondary": "Optimistic", "tertiary": "Inspired"},
-  {"primary": "Happy", "secondary": "Trusting", "tertiary": "Safe"},
-  {"primary": "Happy", "secondary": "Trusting", "tertiary": "Supported"},
-  {"primary": "Happy", "secondary": "Trusting", "tertiary": "Reassured"},
-  {"primary": "Happy", "secondary": "Peaceful", "tertiary": "Loving"},
-  {"primary": "Happy", "secondary": "Peaceful", "tertiary": "Thankful"},
-  {"primary": "Happy", "secondary": "Peaceful", "tertiary": "Content"},
-  {"primary": "Happy", "secondary": "Powerful", "tertiary": "Courageous"},
-  {"primary": "Happy", "secondary": "Powerful", "tertiary": "Creative"},
-  {"primary": "Happy", "secondary": "Powerful", "tertiary": "Hopeful"},
-  {"primary": "Happy", "secondary": "Accepted", "tertiary": "Valued"},
-  {"primary": "Happy", "secondary": "Accepted", "tertiary": "Respected"},
-  {"primary": "Happy", "secondary": "Accepted", "tertiary": "Esteemed"},
-  {"primary": "Happy", "secondary": "Proud", "tertiary": "Confident"},
-  {"primary": "Happy", "secondary": "Proud", "tertiary": "Successful"},
-  {"primary": "Happy", "secondary": "Proud", "tertiary": "Important"},
-  {"primary": "Surprised", "secondary": "Startled", "tertiary": "Shocked"},
-  {"primary": "Surprised", "secondary": "Startled", "tertiary": "Dismayed"},
-  {"primary": "Surprised", "secondary": "Startled", "tertiary": "Astonished"},
-  {"primary": "Surprised", "secondary": "Confused", "tertiary": "Disillusioned"},
-  {"primary": "Surprised", "secondary": "Confused", "tertiary": "Perplexed"},
-  {"primary": "Surprised", "secondary": "Confused", "tertiary": "Disoriented"},
-  {"primary": "Surprised", "secondary": "Amazed", "tertiary": "Awe"},
-  {"primary": "Surprised", "secondary": "Amazed", "tertiary": "Wondrous"},
-  {"primary": "Surprised", "secondary": "Amazed", "tertiary": "Curious"},
-  {"primary": "Surprised", "secondary": "Excited", "tertiary": "Enthusiastic"},
-  {"primary": "Surprised", "secondary": "Excited", "tertiary": "Energetic"},
-  {"primary": "Surprised", "secondary": "Excited", "tertiary": "Eager"},
-  {"primary": "Fearful", "secondary": "Scared", "tertiary": "Helpless"},
-  {"primary": "Fearful", "secondary": "Scared", "tertiary": "Frightened"},
-  {"primary": "Fearful", "secondary": "Scared", "tertiary": "Anxious"},
-  {"primary": "Fearful", "secondary": "Anxious", "tertiary": "Overwhelmed"},
-  {"primary": "Fearful", "secondary": "Anxious", "tertiary": "Uneasy"},
-  {"primary": "Fearful", "secondary": "Anxious", "tertiary": "Insecure"},
-  {"primary": "Fearful", "secondary": "Insecure", "tertiary": "Inferior"},
-  {"primary": "Fearful", "secondary": "Insecure", "tertiary": "Worried"},
-  {"primary": "Fearful", "secondary": "Insecure", "tertiary": "Adequate"},
-  {"primary": "Fearful", "secondary": "Weak", "tertiary": "Rejected"},
-  {"primary": "Fearful", "secondary": "Weak", "tertiary": "Inadequate"},
-  {"primary": "Fearful", "secondary": "Weak", "tertiary": "Worthless"}
+  {
+    "primary": "Anger",
+    "secondary": "Enraged",
+    "tertiary": "Hateful"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Enraged",
+    "tertiary": "Hostile"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Exasperated",
+    "tertiary": "Agitated"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Exasperated",
+    "tertiary": "Frustrated"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Irritable",
+    "tertiary": "Annoyed"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Irritable",
+    "tertiary": "Aggravated"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Jealous",
+    "tertiary": "Resentful"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Jealous",
+    "tertiary": "Envious"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Disgusted",
+    "tertiary": "Contemptuous"
+  },
+  {
+    "primary": "Anger",
+    "secondary": "Disgusted",
+    "tertiary": "Revolted"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Hurt",
+    "tertiary": "Agonized"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Hurt",
+    "tertiary": "Disturbed"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Unhappy",
+    "tertiary": "Miserable"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Unhappy",
+    "tertiary": "Disheartened"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Disappointed",
+    "tertiary": "Dismayed"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Disappointed",
+    "tertiary": "Displeased"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Shameful",
+    "tertiary": "Regretful"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Shameful",
+    "tertiary": "Guilty"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Lonely",
+    "tertiary": "Isolated"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Lonely",
+    "tertiary": "Neglected"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Gloomy",
+    "tertiary": "Hopeless"
+  },
+  {
+    "primary": "Sadness",
+    "secondary": "Gloomy",
+    "tertiary": "Depressed"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Stunned",
+    "tertiary": "Shocked"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Stunned",
+    "tertiary": "Bewildered"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Confused",
+    "tertiary": "Disillusioned"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Confused",
+    "tertiary": "Perplexed"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Amazed",
+    "tertiary": "Astonished"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Amazed",
+    "tertiary": "Awestruck"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Overcome",
+    "tertiary": "Speechless"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Overcome",
+    "tertiary": "Astounded"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Moved",
+    "tertiary": "Stimulated"
+  },
+  {
+    "primary": "Surprise",
+    "secondary": "Moved",
+    "tertiary": "Touched"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Peaceful",
+    "tertiary": "Tranquil"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Peaceful",
+    "tertiary": "Serene"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Content",
+    "tertiary": "Satisfied"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Content",
+    "tertiary": "Pleased"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Happy",
+    "tertiary": "Jovial"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Happy",
+    "tertiary": "Delighted"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Cheerful",
+    "tertiary": "Amused"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Cheerful",
+    "tertiary": "Playful"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Proud",
+    "tertiary": "Triumphant"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Proud",
+    "tertiary": "Illustrious"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Optimistic",
+    "tertiary": "Eager"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Optimistic",
+    "tertiary": "Hopeful"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Excited",
+    "tertiary": "Enthusiastic"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Excited",
+    "tertiary": "Zealous"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Euphoric",
+    "tertiary": "Elated"
+  },
+  {
+    "primary": "Joy",
+    "secondary": "Euphoric",
+    "tertiary": "Jubilant"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Enchanted",
+    "tertiary": "Enthralled"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Enchanted",
+    "tertiary": "Rapturous"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Romantic",
+    "tertiary": "Passionate"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Romantic",
+    "tertiary": "Enamored"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Affectionate",
+    "tertiary": "Warmhearted"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Affectionate",
+    "tertiary": "Compassionate"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Sentimental",
+    "tertiary": "Tender"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Sentimental",
+    "tertiary": "Nostalgic"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Grateful",
+    "tertiary": "Appreciative"
+  },
+  {
+    "primary": "Love",
+    "secondary": "Grateful",
+    "tertiary": "Thankful"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Scared",
+    "tertiary": "Frightened"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Scared",
+    "tertiary": "Helpless"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Terrified",
+    "tertiary": "Panicked"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Terrified",
+    "tertiary": "Hysterical"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Insecure",
+    "tertiary": "Inferior"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Insecure",
+    "tertiary": "Inadequate"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Nervous",
+    "tertiary": "Worried"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Nervous",
+    "tertiary": "Anxious"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Horrified",
+    "tertiary": "Mortified"
+  },
+  {
+    "primary": "Fear",
+    "secondary": "Horrified",
+    "tertiary": "Dreadful"
+  }
 ]
-
