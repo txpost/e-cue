@@ -1,4 +1,4 @@
-.PHONY: install chat practice
+.PHONY: install chat practice learn
 
 VENV_DIR := .venv
 PYTHON := $(VENV_DIR)/bin/python
@@ -16,4 +16,7 @@ chat: $(PYTHON)
 
 practice: $(PYTHON)
 	@$(PYTHON) practice.py
+
+learn: $(PYTHON)
+	@$(PYTHON) learn.py
 
