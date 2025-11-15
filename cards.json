@@ -1,5 +1,6 @@
 [
     {
+        "id": 0,
         "variant": "definition",
         "front": {
             "prompt": "The area where a stock that has been declining is likely to stabilize and then bounce off and move higher (at least temporarily).", 
@@ -14,6 +15,7 @@
         "tags": ["trading"]
     },
     {
+        "id": 1,
         "variant": "multiple-choice",
         "front": {
             "prompt": "Identify the market cycle stage of the chart below?",
@@ -33,6 +35,7 @@
         "tags": ["trading"]
     },
     {
+        "id": 2,
         "variant": "true-false",
         "front": {
             "prompt": "The more times a trendline is touched without being violated, the more significant that trendline is, and the more important an eventual break of that trendline is.",
@@ -50,6 +53,7 @@
         "tags": ["trading"]
     },
     {
+        "id": 3,
         "variant": "definition",
         "front": {
             "prompt": "Consumed by intense, explosive anger.",

@@ -52,6 +52,7 @@ class CardOption:
 @dataclass(frozen=True)
 class Card:
     card_id: str
+    legacy_id: str
     variant: str
     prompt: str
     answer: Union[str, int, bool]
@@ -62,8 +63,18 @@ class Card:
     tags: Sequence[str]
 
 
-def build_card_id(variant: str, prompt: str, back: object) -> str:
+def build_default_card_id(variant: str, prompt: str, back: object) -> str:
     return f"{variant}:{slugify(prompt)}:{repr(back).lower()}"
+
+
+def build_card_id(
+    variant: str, prompt: str, back: object, explicit_id: Optional[object] = None
+) -> str:
+    if explicit_id is not None:
+        identifier = str(explicit_id).strip()
+        if identifier:
+            return identifier
+    return build_default_card_id(variant, prompt, back)
 
 
 def load_cards() -> List[Card]:
@@ -105,7 +116,8 @@ def load_cards() -> List[Card]:
         else:
             tags = [str(tags)]
 
-        card_id = build_card_id(raw_variant, prompt, back)
+        legacy_id = build_default_card_id(raw_variant, prompt, back)
+        card_id = build_card_id(raw_variant, prompt, back, entry.get("id"))
 
         options: List[CardOption] = []
         if raw_variant in {"multiple-choice", "true-false"}:
@@ -140,6 +152,7 @@ def load_cards() -> List[Card]:
         cards.append(
             Card(
                 card_id=card_id,
+                legacy_id=legacy_id,
                 variant=raw_variant,
                 prompt=prompt,
                 answer=back,
@@ -181,8 +194,27 @@ class CardSession:
         self.cards = cards
         self.state = state
         self.card_index: Dict[str, Card] = {card.card_id: card for card in cards}
+        self.legacy_index: Dict[str, Card] = {card.legacy_id: card for card in cards}
         self.new_cards = [card for card in cards if card.card_id not in self.state["cards"]]
         random.shuffle(self.new_cards)
+        self.state_dirty = False
+        self._migrate_legacy_state()
+
+    def _migrate_legacy_state(self) -> None:
+        cards_state = self.state.setdefault("cards", {})
+        migrated = False
+        for legacy_key in list(cards_state.keys()):
+            if legacy_key in self.card_index:
+                continue
+            card = self.legacy_index.get(legacy_key)
+            if not card:
+                continue
+            meta = cards_state.pop(legacy_key)
+            cards_state[card.card_id] = meta
+            meta["card_id"] = card.card_id
+            migrated = True
+        if migrated:
+            self.state_dirty = True
 
     def next_card(self) -> Optional[Card]:
         now = utc_now()
@@ -417,6 +449,8 @@ def main() -> int:
     cards = load_cards()
     state = load_state()
     session = CardSession(cards, state)
+    if session.state_dirty:
+        save_state(state)
 
     print("Learn mode started. Type 'quit' to exit.")
     print(f"Loaded {len(cards)} cards. {session.remaining_new()} new cards remain.\n")
