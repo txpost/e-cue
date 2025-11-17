@@ -1,0 +1,3 @@
+Give me [number] options for [goal], ranked from 'easiest/safest' to 'most ambitious/highest potential'. For each option, specify the resources required and realistic outcomes. Then tell me which option makes sense for someone at [your current level].
+
+Example: "Give me 5 options for growing my newsletter, ranked from easiest to most ambitious. For each, specify resources needed and realistic outcomes. Then tell me which makes sense for someone with 500 subscribers and 5 hours/week."
