@@ -11,6 +11,11 @@ import ollama
 
 MODEL = "llama3:latest"
 
+# ANSI color codes
+COLOR_RESET = "\033[0m"
+COLOR_USER = "\033[96m"  # Bright cyan
+COLOR_E_CUE = "\033[92m"  # Bright green
+
 
 # ==============================
 # Spinner animation
@@ -68,12 +73,12 @@ def load_journal():
     return load_json("journal.json", {"entries": []})
 
 
-def append_to_journal(journal_data, persona_file, user_message, assistant_message):
+def append_to_journal(journal_data, persona_file, user_message, e_cue_message):
     entry = {
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "persona_file": persona_file,
         "user": user_message,
-        "assistant": assistant_message,
+        "e-cue": e_cue_message,
     }
     journal_data.setdefault("entries", []).append(entry)
     save_json("journal.json", journal_data)
@@ -96,7 +101,7 @@ def journal_loop(persona_file):
     print("Type 'exit' or 'quit' to end the session.\n")
 
     while True:
-        user_input = input("You: ").strip()
+        user_input = input(f"{COLOR_USER}You:{COLOR_RESET} ").strip()
         if not user_input:
             continue
         if user_input.lower() in ("exit", "quit"):
@@ -116,8 +121,8 @@ def journal_loop(persona_file):
             continue
 
         ai_message = response["message"]["content"].strip()
-        print(f"\nAssistant: {ai_message}\n")
-        messages.append({"role": "assistant", "content": ai_message})
+        print(f"\n{COLOR_E_CUE}e-cue:{COLOR_RESET} {ai_message}\n")
+        messages.append({"role": "e-cue", "content": ai_message})
 
         # Append to journal immediately
         append_to_journal(journal_data, persona_file, user_input, ai_message)
