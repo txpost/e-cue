@@ -12,7 +12,7 @@ $(PYTHON): requirements.txt
 install: $(PYTHON)
 
 chat: $(PYTHON)
-	@$(PYTHON) chat.py
+	@$(PYTHON) e-cue.py
 
 practice: $(PYTHON)
 	@$(PYTHON) practice.py
