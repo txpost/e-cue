@@ -1,6 +1,7 @@
 import argparse
 import json
 import itertools
+import os
 import sys
 import threading
 import time
@@ -82,6 +83,9 @@ def append_to_journal(journal_data, persona_file, user_message, assistant_messag
 # Main journaling loop
 # ==============================
 def journal_loop(persona_file):
+    # Clear the terminal screen
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
     persona = load_persona(persona_file)
     journal_data = load_journal()
 
