@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { createInterface } from 'readline';
 import { execSync } from 'child_process';
 import { platform } from 'os';
@@ -83,26 +83,6 @@ function loadJournal(): { entries: any[] } {
     return loadJson("journal.json", { entries: [] });
 }
 
-function appendToJournal(
-    journalData: { entries: any[] },
-    personaFile: string,
-    userMessage: string,
-    eCueMessage: string
-): void {
-    const entry = {
-        timestamp: new Date().toISOString().replace('T', ' ').slice(0, 19),
-        persona_file: personaFile,
-        user: userMessage,
-        "e-cue": eCueMessage,
-    };
-    
-    if (!journalData.entries) {
-        journalData.entries = [];
-    }
-    journalData.entries.push(entry);
-    saveJson("journal.json", journalData);
-}
-
 function countWords(text: string): number {
     /** Count words in a text string. */
     return text.trim() ? text.split(/\s+/).length : 0;
@@ -126,9 +106,11 @@ async function journalLoop(personaFile: string): Promise<void> {
     ];
 
     console.log(`Journaling with persona: ${personaFile}`);
-    console.log("Type 'exit' or 'quit' to end the session.\n");
+    console.log("Type 'save' to save and exit, or 'exit'/'quit' to end without saving.\n");
 
     let cumulativeWords = 0;
+    const sessionStartTime = new Date();
+    const sessionExchanges: Array<{ user: string; "e-cue": string }> = [];
 
     const rl = createInterface({
         input: process.stdin,
@@ -147,7 +129,28 @@ async function journalLoop(personaFile: string): Promise<void> {
             continue;
         }
         if (userInput.toLowerCase() === "exit" || userInput.toLowerCase() === "quit") {
-            console.log("\nEnding journal session.");
+            console.log("\nEnding journal session (not saved).");
+            break;
+        }
+        if (userInput.toLowerCase() === "save") {
+            // Save session as a single entry
+            if (sessionExchanges.length > 0) {
+                const sessionEntry = {
+                    timestamp: sessionStartTime.toISOString().replace('T', ' ').slice(0, 19),
+                    persona_file: personaFile,
+                    word_count: cumulativeWords,
+                    exchanges: sessionExchanges,
+                };
+                if (!journalData.entries) {
+                    journalData.entries = [];
+                }
+                journalData.entries.push(sessionEntry);
+                saveJson("journal.json", journalData);
+                console.log(`\n${COLOR_E_CUE}✓ Saved session with ${sessionExchanges.length} exchanges to journal.${COLOR_RESET}\n`);
+            } else {
+                console.log(`\n${COLOR_E_CUE}No entries to save.${COLOR_RESET}\n`);
+            }
+            console.log("Ending journal session.");
             break;
         }
 
@@ -171,8 +174,12 @@ async function journalLoop(personaFile: string): Promise<void> {
             console.log(`\n${COLOR_E_CUE}e-cue:${COLOR_RESET} ${aiMessage}\n`);
             messages.push({ role: "e-cue", content: aiMessage });
 
-            // Append to journal immediately
-            appendToJournal(journalData, personaFile, userInput, aiMessage);
+            // Store exchange in session (not saved yet)
+            const exchange = {
+                user: userInput,
+                "e-cue": aiMessage,
+            };
+            sessionExchanges.push(exchange);
         } catch (e: any) {
             spinner.stop();
             console.error(`\n[error] ${e}`);
