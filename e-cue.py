@@ -84,6 +84,11 @@ def append_to_journal(journal_data, persona_file, user_message, e_cue_message):
     save_json("journal.json", journal_data)
 
 
+def count_words(text):
+    """Count words in a text string."""
+    return len(text.split()) if text.strip() else 0
+
+
 # ==============================
 # Main journaling loop
 # ==============================
@@ -100,6 +105,8 @@ def journal_loop(persona_file):
     print(f"Journaling with persona: {persona_file}")
     print("Type 'exit' or 'quit' to end the session.\n")
 
+    cumulative_words = 0
+
     while True:
         user_input = input(f"{COLOR_USER}You:{COLOR_RESET} ").strip()
         if not user_input:
@@ -107,6 +114,11 @@ def journal_loop(persona_file):
         if user_input.lower() in ("exit", "quit"):
             print("\nEnding journal session.")
             break
+
+        # Show cumulative word count after input
+        word_count = count_words(user_input)
+        cumulative_words += word_count
+        print(f"{COLOR_USER}[{word_count} words this entry, {cumulative_words} words total]{COLOR_RESET}")
 
         messages.append({"role": "user", "content": user_input})
 
