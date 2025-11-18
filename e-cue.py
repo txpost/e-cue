@@ -95,7 +95,7 @@ def count_words(text):
 def journal_loop(persona_file):
     # Clear the terminal screen
     os.system('cls' if os.name == 'nt' else 'clear')
-    
+
     persona = load_persona(persona_file)
     journal_data = load_journal()
 
@@ -103,16 +103,34 @@ def journal_loop(persona_file):
     messages = [{"role": "system", "content": system_prompt}]
 
     print(f"Journaling with persona: {persona_file}")
-    print("Type 'exit' or 'quit' to end the session.\n")
+    print("Type 'save' to save and exit, or 'exit'/'quit' to end without saving.\n")
 
     cumulative_words = 0
+    session_start_time = datetime.now()
+    session_exchanges = []  # Store exchanges (user/e-cue pairs) for this session
 
     while True:
         user_input = input(f"{COLOR_USER}You:{COLOR_RESET} ").strip()
         if not user_input:
             continue
         if user_input.lower() in ("exit", "quit"):
-            print("\nEnding journal session.")
+            print("\nEnding journal session (not saved).")
+            break
+        if user_input.lower() == "save":
+            # Save session as a single entry
+            if session_exchanges:
+                session_entry = {
+                    "timestamp": session_start_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "persona_file": persona_file,
+                    "word_count": cumulative_words,
+                    "exchanges": session_exchanges,
+                }
+                journal_data.setdefault("entries", []).append(session_entry)
+                save_json("journal.json", journal_data)
+                print(f"\n{COLOR_E_CUE}✓ Saved session with {len(session_exchanges)} exchanges to journal.{COLOR_RESET}\n")
+            else:
+                print(f"\n{COLOR_E_CUE}No entries to save.{COLOR_RESET}\n")
+            print("Ending journal session.")
             break
 
         # Show cumulative word count after input
@@ -136,8 +154,12 @@ def journal_loop(persona_file):
         print(f"\n{COLOR_E_CUE}e-cue:{COLOR_RESET} {ai_message}\n")
         messages.append({"role": "e-cue", "content": ai_message})
 
-        # Append to journal immediately
-        append_to_journal(journal_data, persona_file, user_input, ai_message)
+        # Store exchange in session (not saved yet)
+        exchange = {
+            "user": user_input,
+            "e-cue": ai_message,
+        }
+        session_exchanges.append(exchange)
 
 
 def main():
