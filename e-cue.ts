@@ -79,8 +79,159 @@ function loadPersona(personaFile: string): string {
     }
 }
 
-function loadJournal(): { entries: any[] } {
-    return loadJson("journal.json", { entries: [] });
+interface JournalEntry {
+    timestamp: string;
+    persona_file: string;
+    word_count: number;
+    exchanges: Array<{ user: string; "e-cue": string }>;
+}
+
+interface JournalMetadata {
+    current_daily_streak: number;
+    all_time_daily_streak: number;
+    total_word_count: number;
+    average_word_count_per_day: number;
+    average_word_count_per_session: number;
+    total_entries: number;
+    last_entry_date: string | null;
+}
+
+interface JournalData {
+    metadata?: JournalMetadata;
+    entries: JournalEntry[];
+}
+
+function loadJournal(): JournalData {
+    const defaultData: JournalData = {
+        metadata: {
+            current_daily_streak: 0,
+            all_time_daily_streak: 0,
+            total_word_count: 0,
+            average_word_count_per_day: 0,
+            average_word_count_per_session: 0,
+            total_entries: 0,
+            last_entry_date: null,
+        },
+        entries: [],
+    };
+    const data = loadJson<JournalData>("journal.json", defaultData);
+
+    // Ensure metadata exists, initialize if missing
+    if (!data.metadata) {
+        data.metadata = defaultData.metadata!;
+    }
+
+    // Calculate metadata from existing entries if entries exist
+    if (data.entries && data.entries.length > 0) {
+        data.metadata = calculateMetadata(data.entries);
+    }
+
+    return data;
+}
+
+function calculateMetadata(entries: JournalEntry[]): JournalMetadata {
+    if (entries.length === 0) {
+        return {
+            current_daily_streak: 0,
+            all_time_daily_streak: 0,
+            total_word_count: 0,
+            average_word_count_per_day: 0,
+            average_word_count_per_session: 0,
+            total_entries: 0,
+            last_entry_date: null,
+        };
+    }
+
+    const MIN_WORDS_FOR_STREAK = 750;
+
+    // Calculate total word count and track dates with qualifying sessions (750+ words)
+    let totalWordCount = 0;
+    const dates = new Set<string>();
+    const qualifyingDates = new Set<string>(); // Dates with at least one 750+ word session
+    const dateWordCounts = new Map<string, number>(); // Track total words per day
+    let lastEntryDate: string | null = null;
+
+    for (const entry of entries) {
+        const wordCount = entry.word_count || 0;
+        totalWordCount += wordCount;
+
+        // Extract date from timestamp (format: "2025-11-18 13:58:26")
+        const dateStr = entry.timestamp.split(' ')[0];
+        dates.add(dateStr);
+
+        // Track total words per day
+        dateWordCounts.set(dateStr, (dateWordCounts.get(dateStr) || 0) + wordCount);
+
+        // Track dates with at least one qualifying session (750+ words)
+        if (wordCount >= MIN_WORDS_FOR_STREAK) {
+            qualifyingDates.add(dateStr);
+        }
+
+        // Track most recent entry date
+        if (!lastEntryDate || entry.timestamp > lastEntryDate) {
+            lastEntryDate = dateStr;
+        }
+    }
+
+    // Calculate averages
+    const averageWordCountPerSession = totalWordCount / entries.length;
+    const uniqueDaysCount = dates.size;
+    const averageWordCountPerDay = uniqueDaysCount > 0 ? totalWordCount / uniqueDaysCount : 0;
+
+    // Sort qualifying dates for streak calculation
+    const sortedQualifyingDates = Array.from(qualifyingDates).sort();
+
+    // Calculate current daily streak (consecutive days ending today with 750+ word session)
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+
+    let currentStreak = 0;
+    // Only count streak if there's a qualifying entry today
+    if (qualifyingDates.has(todayStr)) {
+        // Check backwards from today
+        const checkDate = new Date(today);
+        let streakDate = todayStr;
+
+        while (qualifyingDates.has(streakDate)) {
+            currentStreak++;
+            checkDate.setDate(checkDate.getDate() - 1);
+            streakDate = checkDate.toISOString().split('T')[0];
+        }
+    }
+
+    // Calculate all-time daily streak (longest consecutive period with 750+ word sessions)
+    let allTimeStreak = 0;
+    if (sortedQualifyingDates.length > 0) {
+        let maxStreak = 1;
+        let currentConsecutive = 1;
+
+        for (let i = 1; i < sortedQualifyingDates.length; i++) {
+            const prevDate = new Date(sortedQualifyingDates[i - 1]);
+            const currDate = new Date(sortedQualifyingDates[i]);
+            const diffDays = Math.floor((currDate.getTime() - prevDate.getTime()) / (1000 * 60 * 60 * 24));
+
+            if (diffDays === 1) {
+                // Consecutive day
+                currentConsecutive++;
+                maxStreak = Math.max(maxStreak, currentConsecutive);
+            } else {
+                // Gap found, reset counter
+                currentConsecutive = 1;
+            }
+        }
+
+        allTimeStreak = maxStreak;
+    }
+
+    return {
+        current_daily_streak: currentStreak,
+        all_time_daily_streak: allTimeStreak,
+        total_word_count: totalWordCount,
+        average_word_count_per_day: Math.round(averageWordCountPerDay * 100) / 100, // Round to 2 decimal places
+        average_word_count_per_session: Math.round(averageWordCountPerSession * 100) / 100, // Round to 2 decimal places
+        total_entries: entries.length,
+        last_entry_date: lastEntryDate,
+    };
 }
 
 function countWords(text: string): number {
@@ -96,7 +247,7 @@ async function journalLoop(personaFile: string): Promise<void> {
     // Clear the terminal screen
     const clearCommand = platform() === 'win32' ? 'cls' : 'clear';
     execSync(clearCommand, { stdio: 'inherit' });
-    
+
     const persona = loadPersona(personaFile);
     const journalData = loadJournal();
 
@@ -135,7 +286,7 @@ async function journalLoop(personaFile: string): Promise<void> {
         if (userInput.toLowerCase() === "save") {
             // Save session as a single entry
             if (sessionExchanges.length > 0) {
-                const sessionEntry = {
+                const sessionEntry: JournalEntry = {
                     timestamp: sessionStartTime.toISOString().replace('T', ' ').slice(0, 19),
                     persona_file: personaFile,
                     word_count: cumulativeWords,
@@ -145,6 +296,10 @@ async function journalLoop(personaFile: string): Promise<void> {
                     journalData.entries = [];
                 }
                 journalData.entries.push(sessionEntry);
+
+                // Calculate and update metadata
+                journalData.metadata = calculateMetadata(journalData.entries);
+
                 saveJson("journal.json", journalData);
                 console.log(`\n${COLOR_E_CUE}✓ Saved session with ${sessionExchanges.length} exchanges to journal.${COLOR_RESET}\n`);
             } else {
@@ -169,7 +324,7 @@ async function journalLoop(personaFile: string): Promise<void> {
                 messages: messages as any,
             });
             spinner.stop();
-            
+
             const aiMessage = response.message.content.trim();
             console.log(`\n${COLOR_E_CUE}e-cue:${COLOR_RESET} ${aiMessage}\n`);
             messages.push({ role: "e-cue", content: aiMessage });
