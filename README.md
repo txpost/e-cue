@@ -77,18 +77,23 @@ npm run dev -- --persona persona_0002_strategic-collaborator.txt
 Journaling with persona: persona.txt
 Type 'save' to save and exit, or 'exit'/'quit' to end without saving.
 
-You: I'm feeling overwhelmed with work today
-[12 words this entry, 12 words total]
+You: I've been thinking about starting a side project but keep putting it off
+[15 words this entry, 15 words total]
 
-e-cue: What specific aspect of work is causing you the most stress right now?
+e-cue: What's holding you back from starting? Is it fear, lack of time, or something else?
 
-You: The constant interruptions and context switching
-[8 words this entry, 20 words total]
+You: I think it's a combination of not knowing where to start and worrying it won't be good enough
+[20 words this entry, 35 words total]
 
-e-cue: How might you create boundaries to protect your focus time?
+e-cue: What would "good enough" look like to you? Sometimes the first step is more important than perfection.
+
+You: I guess good enough would be something I'm proud to share, even if it's not perfect. Maybe I should just start with a small prototype
+[25 words this entry, 60 words total]
+
+e-cue: That sounds like a solid approach. What would that first small prototype look like?
 
 You: save
-✓ Saved session with 2 exchanges to journal.
+✓ Saved session with 3 exchanges to journal.
 ```
 
 ## Project Structure
