@@ -1,3 +1,0 @@
-Don't write an explanation. Instead, create a [specific format] that I can immediately use for [purpose]. Include all necessary components and make it ready to implement without further editing.
-
-Example: "Don't write an explanation about email marketing. Instead, create a 5-email welcome sequence for a vintage clothing store that I can immediately load into my ESP. Include subject lines and actual body copy."
