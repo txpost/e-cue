@@ -15,10 +15,10 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) (v20 or higher recommended)
+- [Python](https://www.python.org/) (v3.8 or higher recommended)
 - [Ollama](https://ollama.ai/) installed and running locally
-- The `llama3:latest` model pulled in Ollama (or modify the model in `e-cue.ts`)
-- ChromaDB server (will be started locally, see setup below)
+- The `llama3:latest` model pulled in Ollama (or modify the model in `e-cue.py`)
+- ChromaDB (will be installed via pip and started locally, see setup below)
 
 ### Installing Ollama
 
@@ -36,19 +36,23 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
    cd e-cue
    ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-   Or using the Makefile:
+2. Install dependencies using the Makefile (recommended):
    ```bash
    make install
    ```
 
-3. ChromaDB runs in embedded mode automatically - no separate server needed!
+   This will create a virtual environment and install all required packages.
 
-   ChromaDB will automatically store data in `./vectorstore/chroma.sqlite3` when you use enrichment or search features. No additional setup required!
+   Or manually:
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+3. ChromaDB server will be started automatically when needed!
+
+   The app will automatically start a ChromaDB server on `localhost:8000` when you use enrichment or search features. No manual setup required!
 
 ## Usage
 
@@ -56,19 +60,30 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
 
 Start a journaling session with the default persona:
 ```bash
-npm run dev
+make dev
 ```
 
-Or using the Makefile:
+Or directly with Python:
 ```bash
-make dev
+python3 e-cue.py
+```
+
+If using a virtual environment:
+```bash
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+python3 e-cue.py
 ```
 
 ### Using Different Personas
 
 Specify a custom persona file:
 ```bash
-npm run dev -- --persona persona_0002_strategic-collaborator.txt
+python3 e-cue.py --persona persona_0002_strategic-collaborator.txt
+```
+
+Or with the Makefile:
+```bash
+make dev  # Then pass --persona as needed
 ```
 
 ### During a Session
@@ -84,30 +99,34 @@ After creating journal entries, you can enrich them with AI analysis and embeddi
 
 Enrich a single entry:
 ```bash
-npm run dev -- enrich <entry-id>
+make enrich ID=<entry-id>
+```
+
+Or directly:
+```bash
+python3 e-cue.py enrich <entry-id>
 ```
 
 Enrich all entries:
 ```bash
-npm run dev -- enrich-all
+make enrich-all
 ```
 
-Or using the Makefile:
+Or directly:
 ```bash
-make enrich ID=<entry-id>
-make enrich-all
+python3 e-cue.py enrich-all
 ```
 
 ### Searching Entries
 
 Search journal entries semantically:
 ```bash
-npm run dev -- search "your search query" --limit 5
+make search QUERY="your search query" LIMIT=5
 ```
 
-Or using the Makefile:
+Or directly:
 ```bash
-make search QUERY="your search query" LIMIT=5
+python3 e-cue.py search "your search query" --limit 5
 ```
 
 ### Example Session
@@ -139,13 +158,13 @@ You: save
 
 ```
 e-cue/
-├── e-cue.ts              # Main application file
+├── e-cue.py              # Main application file
 ├── entries/              # Journal entry JSON files
-├── vectorstore/          # ChromaDB data (chroma.sqlite3)
+├── vectorstore/          # ChromaDB data (created automatically)
 ├── persona.txt           # Default persona file
 ├── persona_*.txt        # Additional persona files
-├── package.json          # Node.js dependencies
-├── tsconfig.json         # TypeScript configuration
+├── requirements.txt      # Python dependencies
+├── metadata.json         # Journal metadata (auto-generated)
 └── Makefile              # Build shortcuts
 ```
 
@@ -160,78 +179,93 @@ by asking probing questions and challenging my assumptions.
 
 Then use it with:
 ```bash
-npm run dev -- --persona my-custom-persona.txt
+python3 e-cue.py --persona my-custom-persona.txt
 ```
 
 ## Journal Format
 
-Journal entries are saved in `journal.json` with the following structure:
+Journal entries are saved as individual JSON files in the `entries/` directory with the following structure:
 
 ```json
 {
-  "entries": [
+  "id": "uuid-here",
+  "timestamp": "2025-11-19T14:14:38Z",
+  "content": "Full text of all user entries in this session",
+  "word_count": 1160,
+  "exchanges": [
     {
-      "timestamp": "2025-11-19 14:14:38",
-      "persona_file": "persona.txt",
-      "word_count": 1160,
-      "exchanges": [
-        {
-          "user": "Your journal entry...",
-          "e-cue": "AI response..."
-        }
-      ]
+      "user": "Your journal entry...",
+      "assistant": "AI response..."
     }
-  ]
+  ],
+  "analysis": {
+    "sentiment": "positive",
+    "emotions": ["happy", "hopeful"],
+    "tone": "reflective",
+    "topics": ["work", "relationships"],
+    "summary": "Brief summary...",
+    "keywords": ["keyword1", "keyword2"]
+  }
 }
 ```
 
 ## Development
 
-### Building
-
-Compile TypeScript:
-```bash
-npm run build
-```
-
 ### Running
 
-Run directly with ts-node:
+Run the application:
 ```bash
-npm run dev
+make dev
+```
+
+Or directly:
+```bash
+python3 e-cue.py
+```
+
+Make sure you have activated your virtual environment if you installed dependencies manually:
+```bash
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+python3 e-cue.py
 ```
 
 ## Configuration
 
-To use a different Ollama model, edit the `MODEL` constant in `e-cue.ts`:
+To use a different Ollama model, edit the `MODEL` constant in `e-cue.py`:
 
-```typescript
-const MODEL = "llama3:latest";  // Change to your preferred model
+```python
+MODEL = "llama3:latest"  # Change to your preferred model
 ```
 
 ## Requirements
 
-- **Node.js**: v20+
-- **TypeScript**: v5.3+
+- **Python**: v3.8+
 - **Ollama**: Latest version with `llama3:latest` model
-- **ChromaDB**: Included via npm, runs in embedded mode (no server needed)
+- **ChromaDB**: Installed via pip, server started automatically when needed
 
 ## ChromaDB Setup
 
-ChromaDB is used for storing embeddings and enabling semantic search. **ChromaDB runs in embedded mode** - no separate server is needed!
+ChromaDB is used for storing embeddings and enabling semantic search. The app automatically starts a ChromaDB server when needed!
 
-### Embedded Mode
+### Automatic Server Mode
 
-ChromaDB automatically runs in embedded mode when you use a local file path. The data is stored in:
-- `./vectorstore/chroma.sqlite3`
+When you run enrichment or search commands, the app will:
+1. Check if a ChromaDB server is running on `localhost:8000`
+2. If not, automatically start one using the `chroma` CLI
+3. Connect to the server and perform the operation
 
-The `vectorstore` directory will be created automatically when you first use enrichment or search features.
+The server runs in the background and will be reused for subsequent operations.
 
 ### Using a Remote ChromaDB Server (Optional)
 
-If you want to use a remote ChromaDB server instead of embedded mode, set the `CHROMA_PATH` environment variable to a URL:
+If you want to use a remote ChromaDB server instead of the local one, set the `CHROMA_URL` environment variable:
 ```bash
-CHROMA_PATH=http://your-chroma-server:8000 npm run dev
+CHROMA_URL=http://your-chroma-server:8000 python3 e-cue.py enrich-all
+```
+
+Or with the Makefile:
+```bash
+CHROMA_URL=http://your-chroma-server:8000 make enrich-all
 ```
 
 ## License

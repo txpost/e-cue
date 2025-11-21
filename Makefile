@@ -1,17 +1,29 @@
-.PHONY: dev install enrich enrich-all search
+.PHONY: dev install enrich enrich-all search venv
 
-install:
-	@npm install
+VENV = .venv
+PYTHON = $(VENV)/bin/python3
+PIP = $(VENV)/bin/pip
 
-dev:
-	@npm run dev
+venv:
+	@if [ ! -d "$(VENV)" ]; then \
+		echo "Creating virtual environment..."; \
+		python3 -m venv $(VENV); \
+	fi
 
-enrich:
-	@npm run dev -- enrich $(ID)
+install: venv
+	@echo "Installing dependencies..."
+	@$(PIP) install --upgrade pip
+	@$(PIP) install -r requirements.txt
 
-enrich-all:
-	@npm run dev -- enrich-all
+dev: venv
+	@$(PYTHON) e-cue.py
 
-search:
-	@npm run dev -- search "$(QUERY)" --limit $(LIMIT)
+enrich: venv
+	@$(PYTHON) e-cue.py enrich $(ID)
+
+enrich-all: venv
+	@$(PYTHON) e-cue.py enrich-all
+
+search: venv
+	@$(PYTHON) e-cue.py search "$(QUERY)" --limit $(LIMIT)
 
