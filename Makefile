@@ -1,4 +1,4 @@
-.PHONY: dev install enrich enrich-all search venv
+.PHONY: dev install enrich enrich-all search venv chroma-server
 
 VENV = .venv
 PYTHON = $(VENV)/bin/python3
@@ -26,4 +26,9 @@ enrich-all: venv
 
 search: venv
 	@$(PYTHON) e-cue.py search "$(QUERY)" --limit $(LIMIT)
+
+chroma-server: venv
+	@echo "Starting ChromaDB server on localhost:8000..."
+	@echo "Press Ctrl+C to stop the server."
+	@$(PYTHON) start_chroma_server.py localhost 8000
 

@@ -129,9 +129,10 @@ def start_chroma_server(url: str) -> None:
         raise Exception("ChromaDB server failed to start within timeout")
     except FileNotFoundError:
         print(
-            "[error] ChromaDB CLI not found. Please install ChromaDB:\n"
-            "  pip install chromadb\n"
-            "Or start the server manually and try again."
+            "[error] ChromaDB CLI not found. Please start the server manually:\n"
+            "  make chroma-server\n"
+            "Or in another terminal, run:\n"
+            "  python3 start_chroma_server.py\n"
         )
         sys.exit(1)
     except Exception as e:

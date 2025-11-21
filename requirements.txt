@@ -1,4 +1,8 @@
 ollama>=0.1.0
 chromadb>=0.4.0
 click>=8.0.0
+uvicorn>=0.20.0
+fastapi>=0.100.0
+opentelemetry-instrumentation>=0.40.0
+opentelemetry-instrumentation-fastapi>=0.40.0
 
