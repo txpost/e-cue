@@ -14,7 +14,6 @@ from datetime import datetime, timedelta
 import asyncio
 import threading
 import time
-from urllib.parse import urlparse
 
 import ollama
 import chromadb
@@ -24,8 +23,9 @@ import click
 MODEL = "llama3:latest"
 ENTRIES_DIR = "entries"
 COLLECTION_NAME = "journal_entries"
+CHROMA_DB_PATH = "chroma_db"
 
-# Initialize ChromaDB client in server mode
+# Initialize ChromaDB client in persistent mode
 chroma_client: Optional[chromadb.Client] = None
 chroma_collection: Optional[chromadb.Collection] = None
 
@@ -76,96 +76,13 @@ class SearchResult(TypedDict):
 # ==============================
 # ChromaDB Functions
 # ==============================
-async def is_chroma_server_running(url: str) -> bool:
-    """Check if ChromaDB server is running."""
-    try:
-        import aiohttp
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f"{url}/api/v1/heartbeat", timeout=aiohttp.ClientTimeout(total=2)) as response:
-                return response.status == 200
-    except Exception:
-        return False
-
-
-def is_chroma_server_running_sync(url: str) -> bool:
-    """Check if ChromaDB server is running (synchronous version)."""
-    try:
-        from urllib.request import urlopen, Request
-        from urllib.error import URLError
-        req = Request(f"{url}/api/v1/heartbeat")
-        with urlopen(req, timeout=2) as response:
-            return response.status == 200
-    except Exception:
-        return False
-
-
-def start_chroma_server(url: str) -> None:
-    """Start ChromaDB server."""
-    url_obj = urlparse(url)
-    host = url_obj.hostname
-    port = url_obj.port or 8000
-
-    print(f"{COLOR_E_CUE}Starting ChromaDB server on {host}:{port}...{COLOR_RESET}")
-
-    try:
-        # Try to start chroma server using the chroma CLI
-        process = subprocess.Popen(
-            ["chroma", "run", "--host", host, "--port", str(port)],
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            start_new_session=True
-        )
-
-        # Give the server a moment to start
-        time.sleep(1)
-
-        # Check if server is now running
-        for attempt in range(10):
-            if is_chroma_server_running_sync(url):
-                print(f"{COLOR_E_CUE}✓ ChromaDB server is running.{COLOR_RESET}")
-                return
-            time.sleep(0.5)
-
-        raise Exception("ChromaDB server failed to start within timeout")
-    except FileNotFoundError:
-        print(
-            "[error] ChromaDB CLI not found. Please start the server manually:\n"
-            "  make chroma-server\n"
-            "Or in another terminal, run:\n"
-            "  python3 start_chroma_server.py\n"
-        )
-        sys.exit(1)
-    except Exception as e:
-        print(f"[error] Failed to start ChromaDB server: {e}")
-        sys.exit(1)
-
-
-def ensure_chroma_server_running() -> None:
-    """Ensure ChromaDB server is running."""
-    chroma_url = os.getenv("CHROMA_URL", "http://localhost:8000")
-
-    # Skip if using a remote server (not localhost)
-    url_obj = urlparse(chroma_url)
-    if url_obj.hostname not in ("localhost", "127.0.0.1"):
-        # Assume remote server is managed externally
-        return
-
-    if not is_chroma_server_running_sync(chroma_url):
-        start_chroma_server(chroma_url)
-
-
 def get_chroma_collection() -> chromadb.Collection:
-    """Get or create ChromaDB collection."""
+    """Get or create ChromaDB collection using persistent client."""
     global chroma_client, chroma_collection
 
     if not chroma_client:
-        # Connect to ChromaDB server - default to http://localhost:8000
-        # Set CHROMA_URL environment variable to use a different server
-        chroma_url = os.getenv("CHROMA_URL", "http://localhost:8000")
-        url_obj = urlparse(chroma_url)
-        host = url_obj.hostname or "localhost"
-        port = url_obj.port or 8000
-        chroma_client = chromadb.HttpClient(host=host, port=port)
+        # Use persistent client mode - stores data locally in chroma_db directory
+        chroma_client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
 
     if not chroma_collection:
         chroma_collection = chroma_client.get_or_create_collection(name=COLLECTION_NAME)
@@ -795,14 +712,12 @@ def cli(ctx: click.Context, persona: str) -> None:
 @click.argument('entry_id')
 def enrich(entry_id: str) -> None:
     """Generate analysis and embedding for an entry, and index it in ChromaDB."""
-    ensure_chroma_server_running()
     asyncio.run(enrich_entry(entry_id))
 
 
 @cli.command(name='enrich-all')
 def enrich_all() -> None:
     """Generate analysis and embedding for all entries that need it, and index them in ChromaDB."""
-    ensure_chroma_server_running()
     asyncio.run(enrich_all_entries())
 
 
@@ -811,7 +726,6 @@ def enrich_all() -> None:
 @click.option('-n', '--limit', default=5, type=int, help='Maximum number of results')
 def search(query: str, limit: int) -> None:
     """Search journal entries semantically using ChromaDB."""
-    ensure_chroma_server_running()
     asyncio.run(search_entries_command(query, limit))
 
 

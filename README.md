@@ -18,7 +18,7 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
 - [Python](https://www.python.org/) (v3.8 or higher recommended)
 - [Ollama](https://ollama.ai/) installed and running locally
 - The `llama3:latest` model pulled in Ollama (or modify the model in `e-cue.py`)
-- ChromaDB (will be installed via pip and started locally, see setup below)
+- ChromaDB (will be installed via pip, uses persistent client mode)
 
 ### Installing Ollama
 
@@ -50,9 +50,9 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
    pip install -r requirements.txt
    ```
 
-3. ChromaDB server will be started automatically when needed!
+3. ChromaDB uses persistent client mode - no server setup required!
 
-   The app will automatically start a ChromaDB server on `localhost:8000` when you use enrichment or search features. No manual setup required!
+   The app uses ChromaDB's persistent client mode, which stores data locally in the `chroma_db/` directory. No server process is needed - everything works automatically!
 
 ## Usage
 
@@ -160,7 +160,7 @@ You: save
 e-cue/
 ├── e-cue.py              # Main application file
 ├── entries/              # Journal entry JSON files
-├── vectorstore/          # ChromaDB data (created automatically)
+├── chroma_db/            # ChromaDB persistent storage (created automatically)
 ├── persona.txt           # Default persona file
 ├── persona_*.txt        # Additional persona files
 ├── requirements.txt      # Python dependencies
@@ -241,32 +241,18 @@ MODEL = "llama3:latest"  # Change to your preferred model
 
 - **Python**: v3.8+
 - **Ollama**: Latest version with `llama3:latest` model
-- **ChromaDB**: Installed via pip, server started automatically when needed
+- **ChromaDB**: Installed via pip, uses persistent client mode
 
 ## ChromaDB Setup
 
-ChromaDB is used for storing embeddings and enabling semantic search. The app automatically starts a ChromaDB server when needed!
+ChromaDB is used for storing embeddings and enabling semantic search. The app uses ChromaDB's persistent client mode, which means:
 
-### Automatic Server Mode
+- **No server required**: Data is stored locally in the `chroma_db/` directory
+- **Automatic setup**: The database directory is created automatically when first used
+- **Persistent storage**: All embeddings and search data persist between application runs
+- **Simple and fast**: No server startup delays or management overhead
 
-When you run enrichment or search commands, the app will:
-1. Check if a ChromaDB server is running on `localhost:8000`
-2. If not, automatically start one using the `chroma` CLI
-3. Connect to the server and perform the operation
-
-The server runs in the background and will be reused for subsequent operations.
-
-### Using a Remote ChromaDB Server (Optional)
-
-If you want to use a remote ChromaDB server instead of the local one, set the `CHROMA_URL` environment variable:
-```bash
-CHROMA_URL=http://your-chroma-server:8000 python3 e-cue.py enrich-all
-```
-
-Or with the Makefile:
-```bash
-CHROMA_URL=http://your-chroma-server:8000 make enrich-all
-```
+The `chroma_db/` directory will be created automatically in your project root when you first use enrichment or search features. You can safely add it to `.gitignore` if you don't want to commit the database files.
 
 ## License
 

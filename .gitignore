@@ -47,3 +47,4 @@ entries/
 e-cue.js
 chroma/
 vectorstore/
+chroma_db/
