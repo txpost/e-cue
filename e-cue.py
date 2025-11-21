@@ -14,7 +14,6 @@ from datetime import datetime, timedelta
 import asyncio
 import threading
 import time
-
 import ollama
 import chromadb
 import click
@@ -26,7 +25,7 @@ COLLECTION_NAME = "journal_entries"
 CHROMA_DB_PATH = "chroma_db"
 
 # Initialize ChromaDB client in persistent mode
-chroma_client: Optional[chromadb.Client] = None
+chroma_client: Optional[Any] = None  # type: ignore
 chroma_collection: Optional[chromadb.Collection] = None
 
 # ANSI color codes
@@ -38,7 +37,7 @@ COLOR_E_CUE = "\x1b[92m"  # Bright green
 # ==============================
 # Type Definitions
 # ==============================
-class Analysis(TypedDict, total=False):
+class Analysis(TypedDict):
     sentiment: str
     emotions: List[str]
     tone: str
@@ -47,7 +46,7 @@ class Analysis(TypedDict, total=False):
     keywords: List[str]
 
 
-class EntryFile(TypedDict, total=False):
+class EntryFile(TypedDict):
     id: str
     timestamp: str
     content: str
@@ -56,7 +55,7 @@ class EntryFile(TypedDict, total=False):
     analysis: Optional[Analysis]
 
 
-class JournalMetadata(TypedDict, total=False):
+class JournalMetadata(TypedDict):
     current_daily_streak: int
     all_time_daily_streak: int
     total_word_count: int
@@ -80,13 +79,15 @@ def get_chroma_collection() -> chromadb.Collection:
     """Get or create ChromaDB collection using persistent client."""
     global chroma_client, chroma_collection
 
-    if not chroma_client:
+    if chroma_client is None:
         # Use persistent client mode - stores data locally in chroma_db directory
         chroma_client = chromadb.PersistentClient(path=CHROMA_DB_PATH)
 
-    if not chroma_collection:
+    if chroma_collection is None:
+        assert chroma_client is not None
         chroma_collection = chroma_client.get_or_create_collection(name=COLLECTION_NAME)
 
+    assert chroma_collection is not None
     return chroma_collection
 
 
@@ -436,7 +437,7 @@ async def enrich_entry(entry_id: str) -> None:
     collection = get_chroma_collection()
     try:
         existing = collection.get(ids=[entry_id])
-        if existing['ids'] and entry.get('analysis'):
+        if existing and existing.get('ids') and entry.get('analysis'):
             print(f"Entry {entry_id} already has analysis and is indexed.")
             return
     except Exception:
@@ -459,6 +460,7 @@ async def enrich_entry(entry_id: str) -> None:
             raise ValueError("Failed to generate embedding")
 
         # Store embedding in ChromaDB
+        analysis = entry.get('analysis')
         collection.upsert(
             ids=[entry_id],
             embeddings=[embedding],
@@ -466,8 +468,8 @@ async def enrich_entry(entry_id: str) -> None:
             metadatas=[{
                 'timestamp': entry['timestamp'],
                 'word_count': str(entry['word_count']),
-                'sentiment': entry.get('analysis', {}).get('sentiment', ''),
-                'tone': entry.get('analysis', {}).get('tone', ''),
+                'sentiment': analysis['sentiment'] if analysis else '',
+                'tone': analysis['tone'] if analysis else '',
             }],
         )
 
@@ -534,20 +536,44 @@ async def search_entries(query: str, limit: int = 5) -> List[SearchResult]:
 
         # Map results to SearchResult format
         search_results: List[SearchResult] = []
-        if results.get('ids') and results['ids'][0]:
-            for i in range(len(results['ids'][0])):
-                entry_id = results['ids'][0][i]
-                distance = results.get('distances', [[None]])[0][i] if results.get('distances') else None
+        ids_list = results.get('ids')
+        if ids_list and len(ids_list) > 0 and ids_list[0]:
+            distances_list = results.get('distances', [])
+            documents_list = results.get('documents', [])
+            metadatas_list = results.get('metadatas', [])
+
+            for i in range(len(ids_list[0])):
+                entry_id = ids_list[0][i]
+                if not isinstance(entry_id, str):
+                    continue
+
+                distance = None
+                if distances_list and len(distances_list) > 0 and i < len(distances_list[0]):
+                    dist_val = distances_list[0][i]
+                    if isinstance(dist_val, (int, float)):
+                        distance = float(dist_val)
+
                 # Convert distance to similarity score (1 - distance, assuming cosine distance)
-                score = max(0, 1 - distance) if distance is not None else 0
-                content = results.get('documents', [[None]])[0][i] if results.get('documents') else ""
-                metadata = results.get('metadatas', [[None]])[0][i] if results.get('metadatas') else {}
-                timestamp = metadata.get('timestamp', '') if metadata else ''
+                score = max(0.0, 1.0 - distance) if distance is not None else 0.0
+
+                content = ""
+                if documents_list and len(documents_list) > 0 and i < len(documents_list[0]):
+                    doc_val = documents_list[0][i]
+                    if isinstance(doc_val, str):
+                        content = doc_val
+
+                timestamp = ""
+                if metadatas_list and len(metadatas_list) > 0 and i < len(metadatas_list[0]):
+                    metadata = metadatas_list[0][i]
+                    if isinstance(metadata, dict):
+                        timestamp_val = metadata.get('timestamp', '')
+                        if isinstance(timestamp_val, str):
+                            timestamp = timestamp_val
 
                 search_results.append({
                     'entryId': entry_id,
                     'score': score,
-                    'content': content or '',
+                    'content': content,
                     'timestamp': timestamp,
                 })
 
@@ -585,8 +611,10 @@ async def search_entries_command(query: str, limit: Optional[int] = None) -> Non
             print(f"{COLOR_E_CUE}{i}. Entry {result['entryId']}{COLOR_RESET}")
             print(f"   Date: {date_str}")
             print(f"   Similarity: {result['score'] * 100:.1f}%")
-            if entry and entry.get('analysis', {}).get('summary'):
-                print(f"   Summary: {entry['analysis']['summary']}")
+            if entry and entry.get('analysis'):
+                analysis = entry['analysis']
+                if analysis and analysis.get('summary'):
+                    print(f"   Summary: {analysis['summary']}")
             content_preview = result['content'][:150] + ('...' if len(result['content']) > 150 else '')
             print(f"   Content: {content_preview}")
             print()
