@@ -1,6 +1,6 @@
 # e-cue
 
-A minimal, AI-powered journaling application that uses local LLMs (via Ollama) to guide your writing sessions with customizable personas.
+A minimal, AI-powered journaling application that uses local LLMs (via Ollama) to guide your writing sessions with customizable personas. Track your writing habits, analyze your entries, and search your journal semantically.
 
 ## Features
 
@@ -11,14 +11,15 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
 - 📊 **Word Count Tracking**: Real-time word count tracking for each session
 - 💾 **JSON Storage**: All journal entries saved in a structured JSON format
 - 🔍 **Semantic Search**: Search journal entries using ChromaDB vector embeddings
-- 📊 **Entry Analysis**: AI-powered analysis of journal entries (sentiment, emotions, topics, etc.)
+- 📊 **Entry Analysis**: AI-powered analysis of journal entries (sentiment, emotions, topics, summaries, keywords)
+- 📈 **Writing Statistics**: Track daily streaks, word counts, and writing habits via metadata
+- 🎯 **Enrichment System**: Add AI analysis and embeddings to entries for enhanced search capabilities
 
 ## Prerequisites
 
 - [Python](https://www.python.org/) (v3.8 or higher recommended)
 - [Ollama](https://ollama.ai/) installed and running locally
 - The `llama3:latest` model pulled in Ollama (or modify the model in `e-cue.py`)
-- ChromaDB (will be installed via pip, uses persistent client mode)
 
 ### Installing Ollama
 
@@ -56,7 +57,7 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
 
 ## Usage
 
-### Basic Usage
+### Starting a Journal Session
 
 Start a journaling session with the default persona:
 ```bash
@@ -78,7 +79,7 @@ python3 e-cue.py
 
 Specify a custom persona file:
 ```bash
-python3 e-cue.py --persona persona_0002_strategic-collaborator.txt
+python3 e-cue.py --persona persona_0000.txt
 ```
 
 Or with the Makefile:
@@ -91,13 +92,20 @@ make dev  # Then pass --persona as needed
 - Type your thoughts and press Enter to get an AI response
 - Type `save` to save the session and exit
 - Type `exit` or `quit` to end without saving
-- Word counts are displayed after each entry
+- Word counts are displayed after each entry (both per-entry and cumulative)
 
 ### Enriching Entries
 
-After creating journal entries, you can enrich them with AI analysis and embeddings:
+After creating journal entries, you can enrich them with AI analysis and embeddings. Enrichment adds:
+- Sentiment analysis
+- Emotion detection
+- Tone identification
+- Topic extraction
+- Summary generation
+- Keyword extraction
+- Vector embeddings for semantic search
 
-Enrich a single entry:
+**Enrich a single entry:**
 ```bash
 make enrich ID=<entry-id>
 ```
@@ -107,7 +115,7 @@ Or directly:
 python3 e-cue.py enrich <entry-id>
 ```
 
-Enrich all entries:
+**Enrich all entries:**
 ```bash
 make enrich-all
 ```
@@ -119,7 +127,7 @@ python3 e-cue.py enrich-all
 
 ### Searching Entries
 
-Search journal entries semantically:
+Search journal entries semantically using vector embeddings:
 ```bash
 make search QUERY="your search query" LIMIT=5
 ```
@@ -128,6 +136,12 @@ Or directly:
 ```bash
 python3 e-cue.py search "your search query" --limit 5
 ```
+
+Search results include:
+- Entry ID and date
+- Similarity score (percentage)
+- Summary (if entry is enriched)
+- Content preview
 
 ### Example Session
 
@@ -151,7 +165,7 @@ You: I guess good enough would be something I'm proud to share, even if it's not
 e-cue: That sounds like a solid approach. What would that first small prototype look like?
 
 You: save
-✓ Saved session with 3 exchanges to journal.
+✓ Saved session with 3 exchanges to entry c826fae4-a441-4438-bd7b-f9a8ac817038.
 ```
 
 ## Project Structure
@@ -189,7 +203,7 @@ Journal entries are saved as individual JSON files in the `entries/` directory w
 ```json
 {
   "id": "uuid-here",
-  "timestamp": "2025-11-19T14:14:38Z",
+  "timestamp": "2025-11-21T14:06:35.964876Z",
   "content": "Full text of all user entries in this session",
   "word_count": 1160,
   "exchanges": [
@@ -208,6 +222,22 @@ Journal entries are saved as individual JSON files in the `entries/` directory w
   }
 }
 ```
+
+The `analysis` field is optional and only present after enrichment.
+
+## Metadata and Statistics
+
+The app automatically tracks writing statistics in `metadata.json`:
+
+- **Current Daily Streak**: Consecutive days with at least one 750+ word session (ending today)
+- **All-Time Daily Streak**: Longest consecutive period with 750+ word sessions
+- **Total Word Count**: Sum of all words across all entries
+- **Average Word Count Per Day**: Average words written per unique day
+- **Average Word Count Per Session**: Average words per journal entry
+- **Total Entries**: Number of journal entries
+- **Last Entry Date**: Date of the most recent entry
+
+Metadata is automatically updated when you save a journal session.
 
 ## Development
 
@@ -229,6 +259,13 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 python3 e-cue.py
 ```
 
+### Available Commands
+
+- **Journal session** (default): `python3 e-cue.py [--persona <file>]`
+- **Enrich entry**: `python3 e-cue.py enrich <entry-id>`
+- **Enrich all**: `python3 e-cue.py enrich-all`
+- **Search**: `python3 e-cue.py search "<query>" [--limit <n>]`
+
 ## Configuration
 
 To use a different Ollama model, edit the `MODEL` constant in `e-cue.py`:
@@ -237,11 +274,14 @@ To use a different Ollama model, edit the `MODEL` constant in `e-cue.py`:
 MODEL = "llama3:latest"  # Change to your preferred model
 ```
 
+Note: The same model is used for both chat and embeddings. Make sure your chosen model supports embeddings (most Ollama models do).
+
 ## Requirements
 
 - **Python**: v3.8+
-- **Ollama**: Latest version with `llama3:latest` model
+- **Ollama**: Latest version with `llama3:latest` model (or your preferred model)
 - **ChromaDB**: Installed via pip, uses persistent client mode
+- **Click**: For CLI argument parsing
 
 ## ChromaDB Setup
 
@@ -253,12 +293,3 @@ ChromaDB is used for storing embeddings and enabling semantic search. The app us
 - **Simple and fast**: No server startup delays or management overhead
 
 The `chroma_db/` directory will be created automatically in your project root when you first use enrichment or search features. You can safely add it to `.gitignore` if you don't want to commit the database files.
-
-## License
-
-[Add your license here]
-
-## Contributing
-
-[Add contribution guidelines here]
-
