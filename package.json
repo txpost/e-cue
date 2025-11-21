@@ -9,6 +9,7 @@
     "dev": "ts-node e-cue.ts"
   },
   "dependencies": {
+    "chromadb": "^1.10.5",
     "commander": "^11.1.0",
     "ollama": "^0.5.8"
   },
@@ -18,4 +19,3 @@
     "typescript": "^5.3.3"
   }
 }
-

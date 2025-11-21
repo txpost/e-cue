@@ -6,9 +6,34 @@ import { program } from 'commander';
 import { randomUUID } from 'crypto';
 import { join } from 'path';
 import ollama from 'ollama';
+// @ts-ignore - ChromaDB types have peer dependency issues
+import { ChromaClient } from 'chromadb';
 
 const MODEL = "llama3:latest";
 const ENTRIES_DIR = "entries";
+const VECTORSTORE_DIR = "vectorstore";
+const COLLECTION_NAME = "journal_entries";
+
+// Initialize ChromaDB client in embedded mode
+let chromaClient: ChromaClient | null = null;
+let chromaCollection: any = null;
+
+async function getChromaCollection() {
+    if (!chromaClient) {
+        // Use local path for embedded mode - ChromaDB will store data in ./vectorstore
+        // If path doesn't start with http://, ChromaDB runs in embedded mode
+        const chromaPath = process.env.CHROMA_PATH || `./${VECTORSTORE_DIR}`;
+        chromaClient = new ChromaClient({
+            path: chromaPath
+        });
+    }
+    if (!chromaCollection) {
+        chromaCollection = await chromaClient.getOrCreateCollection({
+            name: COLLECTION_NAME,
+        });
+    }
+    return chromaCollection;
+}
 
 // ANSI color codes
 const COLOR_RESET = "\x1b[0m";
@@ -165,7 +190,6 @@ interface EntryFile {
         summary: string;
         keywords: string[];
     } | null;
-    embedding?: number[] | null;
 }
 
 interface JournalEntry {
@@ -410,10 +434,16 @@ async function enrichEntry(entryId: string): Promise<void> {
         return;
     }
 
-    // Skip if already enriched
-    if (entry.analysis && entry.embedding) {
-        console.log(`Entry ${entryId} already has analysis and embedding.`);
-        return;
+    // Check if already enriched and indexed
+    const collection = await getChromaCollection();
+    try {
+        const existing = await collection.get({ ids: [entryId] });
+        if (existing.ids.length > 0 && entry.analysis) {
+            console.log(`Entry ${entryId} already has analysis and is indexed.`);
+            return;
+        }
+    } catch (error) {
+        // Collection might be empty, continue with enrichment
     }
 
     console.log(`Generating analysis and embedding for entry ${entryId}...`);
@@ -426,15 +456,30 @@ async function enrichEntry(entryId: string): Promise<void> {
             entry.analysis = await generateAnalysis(entry.content);
         }
 
-        // Generate embedding if missing
-        if (!entry.embedding || entry.embedding.length === 0) {
-            entry.embedding = await generateEmbedding(entry.content);
+        // Generate embedding
+        const embedding = await generateEmbedding(entry.content);
+
+        if (embedding.length === 0) {
+            throw new Error("Failed to generate embedding");
         }
 
-        // Update entry file
+        // Store embedding in ChromaDB
+        await collection.upsert({
+            ids: [entryId],
+            embeddings: [embedding],
+            documents: [entry.content],
+            metadatas: [{
+                timestamp: entry.timestamp,
+                word_count: entry.word_count.toString(),
+                sentiment: entry.analysis?.sentiment || "",
+                tone: entry.analysis?.tone || "",
+            }],
+        });
+
+        // Update entry file (without embedding)
         updateEntry(entry);
         spinner.stop();
-        console.log(`${COLOR_E_CUE}✓ Successfully enriched entry ${entryId}.${COLOR_RESET}`);
+        console.log(`${COLOR_E_CUE}✓ Successfully enriched and indexed entry ${entryId}.${COLOR_RESET}`);
     } catch (error) {
         spinner.stop();
         console.error(`[error] Failed to enrich entry: ${error}`);
@@ -443,20 +488,123 @@ async function enrichEntry(entryId: string): Promise<void> {
 
 async function enrichAllEntries(): Promise<void> {
     const entries = loadAllEntries();
-    const entriesToEnrich = entries.filter(e => !e.analysis || !e.embedding || e.embedding.length === 0);
+    const collection = await getChromaCollection();
+
+    // Get all indexed entry IDs
+    let indexedIds = new Set<string>();
+    try {
+        const allIndexed = await collection.get();
+        indexedIds = new Set(allIndexed.ids);
+    } catch (error) {
+        // Collection might be empty, continue
+    }
+
+    // Filter entries that need enrichment (missing analysis or not indexed)
+    const entriesToEnrich = entries.filter(e => {
+        const needsAnalysis = !e.analysis;
+        const needsIndexing = !indexedIds.has(e.id);
+        return needsAnalysis || needsIndexing;
+    });
 
     if (entriesToEnrich.length === 0) {
-        console.log("All entries are already enriched.");
+        console.log("All entries are already enriched and indexed.");
         return;
     }
 
-    console.log(`Found ${entriesToEnrich.length} entries to enrich.`);
+    console.log(`Found ${entriesToEnrich.length} entries to enrich and index.`);
 
     for (const entry of entriesToEnrich) {
         await enrichEntry(entry.id);
     }
 
-    console.log(`${COLOR_E_CUE}✓ Finished enriching all entries.${COLOR_RESET}`);
+    console.log(`${COLOR_E_CUE}✓ Finished enriching and indexing all entries.${COLOR_RESET}`);
+}
+
+interface SearchResult {
+    entryId: string;
+    score: number;
+    content: string;
+    timestamp: string;
+}
+
+async function searchEntries(query: string, limit: number = 5): Promise<SearchResult[]> {
+    try {
+        const collection = await getChromaCollection();
+
+        // Generate embedding for query
+        const queryEmbedding = await generateEmbedding(query);
+        if (queryEmbedding.length === 0) {
+            throw new Error("Failed to generate query embedding");
+        }
+
+        // Query ChromaDB
+        const results = await collection.query({
+            queryEmbeddings: [queryEmbedding],
+            nResults: limit,
+            include: ["documents", "metadatas", "distances"],
+        });
+
+        // Map results to SearchResult format
+        const searchResults: SearchResult[] = [];
+        if (results.ids && results.ids.length > 0 && results.ids[0]) {
+            for (let i = 0; i < results.ids[0].length; i++) {
+                const entryId = results.ids[0][i];
+                const distance = results.distances?.[0]?.[i];
+                // Convert distance to similarity score (1 - distance, assuming cosine distance)
+                const score = distance !== undefined ? Math.max(0, 1 - distance) : 0;
+                const content = results.documents?.[0]?.[i] || "";
+                const metadata = results.metadatas?.[0]?.[i];
+                const timestamp = (metadata?.timestamp as string) || "";
+
+                searchResults.push({
+                    entryId,
+                    score,
+                    content,
+                    timestamp,
+                });
+            }
+        }
+
+        return searchResults;
+    } catch (error) {
+        console.error(`[error] Failed to search entries: ${error}`);
+        return [];
+    }
+}
+
+async function searchEntriesCommand(query: string, limit?: number): Promise<void> {
+    console.log(`Searching for: "${query}"\n`);
+    const spinner = new Spinner("Searching");
+    spinner.start();
+
+    try {
+        const results = await searchEntries(query, limit || 5);
+        spinner.stop();
+
+        if (results.length === 0) {
+            console.log("No matching entries found.");
+            return;
+        }
+
+        console.log(`Found ${results.length} matching entries:\n`);
+        for (let i = 0; i < results.length; i++) {
+            const result = results[i];
+            const entry = loadEntryById(result.entryId);
+            const dateStr = result.timestamp ? new Date(result.timestamp).toLocaleDateString() : "Unknown date";
+
+            console.log(`${COLOR_E_CUE}${i + 1}. Entry ${result.entryId}${COLOR_RESET}`);
+            console.log(`   Date: ${dateStr}`);
+            console.log(`   Similarity: ${(result.score * 100).toFixed(1)}%`);
+            if (entry?.analysis?.summary) {
+                console.log(`   Summary: ${entry.analysis.summary}`);
+            }
+            console.log(`   Content: ${result.content.substring(0, 150)}${result.content.length > 150 ? '...' : ''}`);
+            console.log();
+        }
+    } catch (error) {
+        spinner.stop();
+        console.error(`[error] Search failed: ${error}`);
+    }
 }
 
 
@@ -518,7 +666,6 @@ async function journalLoop(personaFile: string): Promise<void> {
                     word_count: cumulativeWords,
                     exchanges: sessionExchanges,
                     analysis: null,
-                    embedding: null,
                 };
 
                 saveEntry(entry);
@@ -574,7 +721,7 @@ async function journalLoop(personaFile: string): Promise<void> {
 
 async function main(): Promise<void> {
     const args = process.argv.slice(2);
-    const hasCommand = args.some(arg => arg === "enrich" || arg === "enrich-all" || arg === "help");
+    const hasCommand = args.some(arg => arg === "enrich" || arg === "enrich-all" || arg === "search" || arg === "help");
 
     // If no command, manually parse persona option and run journal loop
     if (!hasCommand) {
@@ -597,7 +744,7 @@ async function main(): Promise<void> {
 
     program
         .command("enrich")
-        .description("Generate analysis and embedding for an entry")
+        .description("Generate analysis and embedding for an entry, and index it in ChromaDB")
         .argument("<entry-id>", "Entry ID to enrich")
         .action(async (entryId: string) => {
             await enrichEntry(entryId);
@@ -606,9 +753,20 @@ async function main(): Promise<void> {
 
     program
         .command("enrich-all")
-        .description("Generate analysis and embedding for all entries that need it")
+        .description("Generate analysis and embedding for all entries that need it, and index them in ChromaDB")
         .action(async () => {
             await enrichAllEntries();
+            process.exit(0);
+        });
+
+    program
+        .command("search")
+        .description("Search journal entries semantically using ChromaDB")
+        .argument("<query>", "Search query")
+        .option("-n, --limit <number>", "Maximum number of results", "5")
+        .action(async (query: string, options: { limit?: string }) => {
+            const limit = options.limit ? parseInt(options.limit, 10) : 5;
+            await searchEntriesCommand(query, limit);
             process.exit(0);
         });
 

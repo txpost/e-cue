@@ -10,12 +10,15 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
 - 🎨 **Beautiful CLI**: Color-coded interface with loading spinners for a smooth terminal experience
 - 📊 **Word Count Tracking**: Real-time word count tracking for each session
 - 💾 **JSON Storage**: All journal entries saved in a structured JSON format
+- 🔍 **Semantic Search**: Search journal entries using ChromaDB vector embeddings
+- 📊 **Entry Analysis**: AI-powered analysis of journal entries (sentiment, emotions, topics, etc.)
 
 ## Prerequisites
 
 - [Node.js](https://nodejs.org/) (v20 or higher recommended)
 - [Ollama](https://ollama.ai/) installed and running locally
 - The `llama3:latest` model pulled in Ollama (or modify the model in `e-cue.ts`)
+- ChromaDB server (will be started locally, see setup below)
 
 ### Installing Ollama
 
@@ -37,11 +40,15 @@ A minimal, AI-powered journaling application that uses local LLMs (via Ollama) t
    ```bash
    npm install
    ```
-   
+
    Or using the Makefile:
    ```bash
    make install
    ```
+
+3. ChromaDB runs in embedded mode automatically - no separate server needed!
+
+   ChromaDB will automatically store data in `./vectorstore/chroma.sqlite3` when you use enrichment or search features. No additional setup required!
 
 ## Usage
 
@@ -70,6 +77,38 @@ npm run dev -- --persona persona_0002_strategic-collaborator.txt
 - Type `save` to save the session and exit
 - Type `exit` or `quit` to end without saving
 - Word counts are displayed after each entry
+
+### Enriching Entries
+
+After creating journal entries, you can enrich them with AI analysis and embeddings:
+
+Enrich a single entry:
+```bash
+npm run dev -- enrich <entry-id>
+```
+
+Enrich all entries:
+```bash
+npm run dev -- enrich-all
+```
+
+Or using the Makefile:
+```bash
+make enrich ID=<entry-id>
+make enrich-all
+```
+
+### Searching Entries
+
+Search journal entries semantically:
+```bash
+npm run dev -- search "your search query" --limit 5
+```
+
+Or using the Makefile:
+```bash
+make search QUERY="your search query" LIMIT=5
+```
 
 ### Example Session
 
@@ -101,7 +140,8 @@ You: save
 ```
 e-cue/
 ├── e-cue.ts              # Main application file
-├── journal.json          # Saved journal entries (auto-generated)
+├── entries/              # Journal entry JSON files
+├── vectorstore/          # ChromaDB data (chroma.sqlite3)
 ├── persona.txt           # Default persona file
 ├── persona_*.txt        # Additional persona files
 ├── package.json          # Node.js dependencies
@@ -114,7 +154,7 @@ e-cue/
 Persona files are simple text files that define how the AI should behave during journaling sessions. Create a new `.txt` file with instructions for the AI, for example:
 
 ```
-You are a strategic thinking partner. Help me explore ideas deeply 
+You are a strategic thinking partner. Help me explore ideas deeply
 by asking probing questions and challenging my assumptions.
 ```
 
@@ -174,6 +214,25 @@ const MODEL = "llama3:latest";  // Change to your preferred model
 - **Node.js**: v20+
 - **TypeScript**: v5.3+
 - **Ollama**: Latest version with `llama3:latest` model
+- **ChromaDB**: Included via npm, runs in embedded mode (no server needed)
+
+## ChromaDB Setup
+
+ChromaDB is used for storing embeddings and enabling semantic search. **ChromaDB runs in embedded mode** - no separate server is needed!
+
+### Embedded Mode
+
+ChromaDB automatically runs in embedded mode when you use a local file path. The data is stored in:
+- `./vectorstore/chroma.sqlite3`
+
+The `vectorstore` directory will be created automatically when you first use enrichment or search features.
+
+### Using a Remote ChromaDB Server (Optional)
+
+If you want to use a remote ChromaDB server instead of embedded mode, set the `CHROMA_PATH` environment variable to a URL:
+```bash
+CHROMA_PATH=http://your-chroma-server:8000 npm run dev
+```
 
 ## License
 
