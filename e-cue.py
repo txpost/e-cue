@@ -583,6 +583,38 @@ async def search_entries(query: str, limit: int = 5) -> List[SearchResult]:
         return []
 
 
+def format_entry_context(search_results: List[SearchResult]) -> str:
+    """Format retrieved journal entries into context string for AI responses."""
+    if not search_results:
+        return ""
+    
+    context_parts = ["Relevant journal entries for context:\n"]
+    
+    for i, result in enumerate(search_results, 1):
+        entry = load_entry_by_id(result['entryId'])
+        date_str = "Unknown date"
+        
+        if result['timestamp']:
+            try:
+                date_obj = datetime.fromisoformat(result['timestamp'].replace('Z', '+00:00'))
+                date_str = date_obj.strftime('%Y-%m-%d')
+            except Exception:
+                pass
+        
+        # Use summary if available, otherwise truncate content
+        content_preview = result['content']
+        if entry and entry.get('analysis'):
+            analysis = entry['analysis']
+            if analysis and analysis.get('summary'):
+                content_preview = analysis['summary']
+        elif len(content_preview) > 300:
+            content_preview = content_preview[:300] + "..."
+        
+        context_parts.append(f"{i}. Entry from {date_str}: {content_preview}\n")
+    
+    return "\n".join(context_parts)
+
+
 async def search_entries_command(query: str, limit: Optional[int] = None) -> None:
     """Command handler for search."""
     print(f'Searching for: "{query}"\n')
@@ -632,23 +664,51 @@ async def journal_loop(persona_file: str) -> None:
     clear_command = 'cls' if platform.system() == 'Windows' else 'clear'
     subprocess.run(clear_command, shell=True, check=False)
 
-    persona = load_persona(persona_file)
-
-    system_prompt = persona
-    messages: List[Dict[str, str]] = [
-        {"role": "system", "content": system_prompt}
-    ]
-
-    print(f"Journaling with persona: {persona_file}")
-    print("Type 'save' to save and exit, or 'exit'/'quit' to end without saving.\n")
-
+    # Mode tracking - default is journal mode
+    mode = "journal"
     cumulative_words = 0
     session_start_time = datetime.now()
     session_exchanges: List[Dict[str, str]] = []
+    
+    def load_mode_persona(current_mode: str) -> str:
+        """Load the appropriate persona file based on mode."""
+        if current_mode == "insight":
+            return load_persona("persona_insight.txt")
+        else:
+            return load_persona("persona_journal.txt")
+    
+    def update_system_message(current_mode: str, context: str = "") -> None:
+        """Update the system message in messages array with the appropriate persona."""
+        # Always reload the base persona to ensure placeholder is present
+        persona_base = load_mode_persona(current_mode)
+        
+        # Replace placeholder with context if in insight mode
+        if current_mode == "insight":
+            if context:
+                # Replace placeholder with actual context
+                persona = persona_base.replace("<<<CHROMA_RETRIEVAL>>>", context)
+            else:
+                # Remove placeholder and its line if no context
+                persona = persona_base.replace("<<<CHROMA_RETRIEVAL>>>\n", "").replace("<<<CHROMA_RETRIEVAL>>>", "").strip()
+        else:
+            persona = persona_base
+        
+        # Update or add system message (should be first message)
+        if messages and messages[0].get("role") == "system":
+            messages[0]["content"] = persona
+        else:
+            messages.insert(0, {"role": "system", "content": persona})
+    
+    # Initialize messages with journal mode persona
+    messages: List[Dict[str, str]] = []
+    update_system_message(mode)
+
+    print(f"Journaling with persona: persona_{mode}.txt")
+    print("Type 'insight' or 'journal' to switch modes, 'save' to save and exit, or 'exit'/'quit' to end without saving.\n")
 
     while True:
         try:
-            user_input = input(f"{COLOR_USER}You:{COLOR_RESET} ").strip()
+            user_input = input(f"{COLOR_USER}You [{mode}]:{COLOR_RESET} ").strip()
         except (EOFError, KeyboardInterrupt):
             print("\nEnding journal session (not saved).")
             break
@@ -656,15 +716,35 @@ async def journal_loop(persona_file: str) -> None:
         if not user_input:
             continue
 
+        # Mode switching commands (must be single word)
+        if user_input.lower() == "insight":
+            mode = "insight"
+            update_system_message(mode)
+            print(f"{COLOR_E_CUE}Switched to insight mode. Responses will include context from your journal entries.{COLOR_RESET}\n")
+            print(f"Using persona: persona_{mode}.txt\n")
+            continue
+
+        if user_input.lower() == "journal":
+            mode = "journal"
+            update_system_message(mode)
+            print(f"{COLOR_E_CUE}Switched to journal mode. Regular journaling mode active.{COLOR_RESET}\n")
+            print(f"Using persona: persona_{mode}.txt\n")
+            continue
+
         if user_input.lower() in ("exit", "quit"):
             print("\nEnding journal session (not saved).")
             break
 
         if user_input.lower() == "save":
-            # Save session as a single entry
-            if session_exchanges:
-                # Concatenate all user inputs into content field
-                content = ' '.join(ex['user'] for ex in session_exchanges)
+            # Filter exchanges that occurred in journal mode (for saving)
+            journal_exchanges = [ex for ex in session_exchanges if ex.get('mode') == 'journal']
+            
+            if journal_exchanges:
+                # Concatenate all user inputs from journal mode into content field
+                content = ' '.join(ex['user'] for ex in journal_exchanges)
+                
+                # Calculate word count only from journal mode exchanges
+                journal_word_count = sum(count_words(ex['user']) for ex in journal_exchanges)
 
                 entry_id = str(uuid.uuid4())
                 timestamp = session_start_time.isoformat() + 'Z'
@@ -673,8 +753,8 @@ async def journal_loop(persona_file: str) -> None:
                     'id': entry_id,
                     'timestamp': timestamp,
                     'content': content,
-                    'word_count': cumulative_words,
-                    'exchanges': session_exchanges,
+                    'word_count': journal_word_count,
+                    'exchanges': journal_exchanges,
                     'analysis': None,
                 }
 
@@ -685,16 +765,40 @@ async def journal_loop(persona_file: str) -> None:
                 metadata = calculate_metadata(all_entries)
                 save_metadata(metadata)
 
-                print(f"\n{COLOR_E_CUE}✓ Saved session with {len(session_exchanges)} exchanges to entry {entry_id}.{COLOR_RESET}\n")
+                print(f"\n{COLOR_E_CUE}✓ Saved journal session with {len(journal_exchanges)} exchanges to entry {entry_id}.{COLOR_RESET}\n")
             else:
-                print(f"\n{COLOR_E_CUE}No entries to save.{COLOR_RESET}\n")
+                if mode == "insight":
+                    print(f"\n{COLOR_E_CUE}Insight mode conversations are not saved. Switch to journal mode to save entries.{COLOR_RESET}\n")
+                else:
+                    print(f"\n{COLOR_E_CUE}No entries to save.{COLOR_RESET}\n")
             print("Ending journal session.")
             break
 
-        # Show cumulative word count after input
-        word_count = count_words(user_input)
-        cumulative_words += word_count
-        print(f"{COLOR_USER}[{word_count} words this entry, {cumulative_words} words total]{COLOR_RESET}")
+        # Show cumulative word count after input (only in journal mode)
+        if mode == "journal":
+            word_count = count_words(user_input)
+            cumulative_words += word_count
+            print(f"{COLOR_USER}[{word_count} words this entry, {cumulative_words} words total]{COLOR_RESET}")
+
+        # In insight mode, retrieve relevant entries for context and update system message
+        if mode == "insight":
+            spinner = Spinner("Retrieving relevant entries")
+            spinner.start()
+            try:
+                relevant_entries = await search_entries(user_input, limit=5)
+                spinner.stop()
+                
+                context_text = ""
+                if relevant_entries:
+                    context_text = format_entry_context(relevant_entries)
+                
+                # Update system message with context (replacing placeholder)
+                update_system_message(mode, context_text)
+            except Exception as e:
+                spinner.stop()
+                print(f"{COLOR_USER}[Warning: Could not retrieve journal context: {e}]{COLOR_RESET}")
+                # Update system message without context (remove placeholder)
+                update_system_message(mode)
 
         messages.append({"role": "user", "content": user_input})
 
@@ -712,10 +816,11 @@ async def journal_loop(persona_file: str) -> None:
             print(f"\n{COLOR_E_CUE}e-cue:{COLOR_RESET} {ai_message}\n")
             messages.append({"role": "e-cue", "content": ai_message})
 
-            # Store exchange in session (not saved yet)
+            # Store exchange in session with mode tracking (not saved yet)
             exchange = {
                 'user': user_input,
                 'assistant': ai_message,
+                'mode': mode,
             }
             session_exchanges.append(exchange)
         except Exception as e:
