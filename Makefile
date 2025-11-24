@@ -27,3 +27,7 @@ enrich-all: venv
 search: venv
 	@$(PYTHON) e-cue.py search "$(QUERY)" --limit $(LIMIT)
 
+api: venv
+	@echo "Starting FastAPI server on http://localhost:5000"
+	@$(VENV)/bin/uvicorn api:app --reload --port 5000
+
