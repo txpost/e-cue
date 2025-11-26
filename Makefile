@@ -1,4 +1,4 @@
-.PHONY: dev install enrich enrich-all search venv
+.PHONY: dev install enrich enrich-all search check-index venv
 
 VENV = .venv
 PYTHON = $(VENV)/bin/python3
@@ -26,6 +26,9 @@ enrich-all: venv
 
 search: venv
 	@$(PYTHON) e-cue.py search "$(QUERY)" --limit $(LIMIT)
+
+check-index: venv
+	@$(PYTHON) e-cue.py check-index
 
 api: venv
 	@echo "Starting FastAPI server on http://localhost:5000"

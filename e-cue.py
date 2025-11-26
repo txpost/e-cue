@@ -426,23 +426,31 @@ async def generate_embedding(content: str) -> List[float]:
 # ==============================
 # Enrichment Functions
 # ==============================
-async def enrich_entry(entry_id: str) -> None:
-    """Enrich a single entry with analysis and embedding."""
+async def enrich_entry(entry_id: str, force: bool = False) -> None:
+    """Enrich a single entry with analysis and embedding.
+    
+    Args:
+        entry_id: The ID of the entry to enrich
+        force: If True, force re-indexing even if entry appears to be indexed
+    """
     entry = load_entry_by_id(entry_id)
     if not entry:
         print(f"[error] Entry with ID {entry_id} not found.")
         return
 
-    # Check if already enriched and indexed
-    collection = get_chroma_collection()
-    try:
-        existing = collection.get(ids=[entry_id])
-        if existing and existing.get('ids') and entry.get('analysis'):
-            print(f"Entry {entry_id} already has analysis and is indexed.")
-            return
-    except Exception:
-        # Collection might be empty, continue with enrichment
-        pass
+    # Check if already enriched and indexed (unless force is True)
+    if not force:
+        collection = get_chroma_collection()
+        try:
+            existing = collection.get(ids=[entry_id])
+            existing_ids = existing.get('ids', []) if existing else []
+            # Explicitly check if entry_id is in the returned IDs list
+            if entry_id in existing_ids and entry.get('analysis'):
+                print(f"Entry {entry_id} already has analysis and is indexed.")
+                return
+        except Exception:
+            # Collection might be empty, continue with enrichment
+            pass
 
     print(f"Generating analysis and embedding for entry {entry_id}...")
     spinner = Spinner("Processing")
@@ -492,24 +500,40 @@ async def enrich_all_entries() -> None:
     try:
         all_indexed = collection.get()
         indexed_ids = set(all_indexed.get('ids', []))
-    except Exception:
+        print(f"Found {len(indexed_ids)} entries already indexed in ChromaDB.")
+    except Exception as e:
         # Collection might be empty, continue
+        print(f"Could not retrieve indexed entries: {e}")
         pass
 
+    print(f"Total entries in files: {len(entries)}")
+    
     # Filter entries that need enrichment (missing analysis or not indexed)
     entries_to_enrich = [
         e for e in entries
         if not e.get('analysis') or e['id'] not in indexed_ids
     ]
+    
+    # Show which entries are missing from ChromaDB but have analysis
+    entries_with_analysis_not_indexed = [
+        e for e in entries
+        if e.get('analysis') and e['id'] not in indexed_ids
+    ]
+    if entries_with_analysis_not_indexed:
+        print(f"\n⚠️  Found {len(entries_with_analysis_not_indexed)} entries with analysis but NOT indexed:")
+        for e in entries_with_analysis_not_indexed:
+            print(f"   - {e['id']} ({e['timestamp'].split('T')[0]})")
 
     if not entries_to_enrich:
         print("All entries are already enriched and indexed.")
         return
 
-    print(f"Found {len(entries_to_enrich)} entries to enrich and index.")
+    print(f"\nFound {len(entries_to_enrich)} entries to enrich and index.")
 
     for entry in entries_to_enrich:
-        await enrich_entry(entry['id'])
+        # Force re-indexing if entry has analysis but isn't indexed
+        force = bool(entry.get('analysis') and entry['id'] not in indexed_ids)
+        await enrich_entry(entry['id'], force=force)
 
     print(f"{COLOR_E_CUE}✓ Finished enriching and indexing all entries.{COLOR_RESET}")
 
@@ -766,6 +790,10 @@ async def journal_loop(persona_file: str) -> None:
                 save_metadata(metadata)
 
                 print(f"\n{COLOR_E_CUE}✓ Saved journal session with {len(journal_exchanges)} exchanges to entry {entry_id}.{COLOR_RESET}\n")
+                
+                # Auto-enrich the entry after saving
+                print(f"{COLOR_E_CUE}Enriching entry for semantic search...{COLOR_RESET}")
+                await enrich_entry(entry_id)
             else:
                 if mode == "insight":
                     print(f"\n{COLOR_E_CUE}Insight mode conversations are not saved. Switch to journal mode to save entries.{COLOR_RESET}\n")
@@ -862,10 +890,54 @@ def search(query: str, limit: int) -> None:
     asyncio.run(search_entries_command(query, limit))
 
 
+@cli.command(name='check-index')
+def check_index() -> None:
+    """Check which entries are indexed in ChromaDB vs which exist in files."""
+    entries = load_all_entries()
+    collection = get_chroma_collection()
+    
+    # Get all indexed entry IDs
+    indexed_ids = set()
+    try:
+        all_indexed = collection.get()
+        indexed_ids = set(all_indexed.get('ids', []))
+    except Exception as e:
+        print(f"Error retrieving indexed entries: {e}")
+        indexed_ids = set()
+    
+    print(f"\nTotal entries in files: {len(entries)}")
+    print(f"Total entries indexed in ChromaDB: {len(indexed_ids)}")
+    print()
+    
+    # Find entries not indexed
+    file_ids = {e['id'] for e in entries}
+    not_indexed = file_ids - indexed_ids
+    
+    if not_indexed:
+        print(f"⚠️  {len(not_indexed)} entries NOT indexed in ChromaDB:")
+        for entry_id in sorted(not_indexed):
+            entry = next((e for e in entries if e['id'] == entry_id), None)
+            if entry:
+                date = entry['timestamp'].split('T')[0]
+                has_analysis = 'analysis' in entry and entry.get('analysis') is not None
+                print(f"   - {entry_id[:8]}... ({date}) - Analysis: {'✓' if has_analysis else '✗'}")
+    else:
+        print("✓ All entries are indexed in ChromaDB")
+    
+    # Find entries in index but not in files (orphaned)
+    indexed_only = indexed_ids - file_ids
+    if indexed_only:
+        print(f"\n⚠️  {len(indexed_only)} entries in ChromaDB but not in files (orphaned):")
+        for entry_id in sorted(indexed_only):
+            print(f"   - {entry_id[:8]}...")
+    
+    print()
+
+
 def main() -> None:
     """Main entry point."""
     # Check if running without a command (default to journal loop)
-    if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in ('enrich', 'enrich-all', 'search', '--help', '-h')):
+    if len(sys.argv) == 1 or (len(sys.argv) > 1 and sys.argv[1] not in ('enrich', 'enrich-all', 'search', 'check-index', '--help', '-h')):
         # Parse --persona option manually for journal loop
         persona_file = "persona.txt"
         if '--persona' in sys.argv:
